@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zero-Trace</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #000;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            #1c0d00 0%,
+            #080400 38%,
+            #000 78%
+        );
+}
+
+
+/* =========================
+   ПРИЗРАКИ
+========================= */
+
+.ghosts {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.ghost {
+    position: absolute;
+
+    width: var(--size);
+    height: var(--size);
+
+    object-fit: contain;
+
+    /*
+       Делаем тёмного призрака
+       оранжевым и добавляем свечение
+    */
+
+    filter:
+        sepia(1)
+        saturate(7)
+        hue-rotate(340deg)
+        brightness(1.05)
+        drop-shadow(0 0 5px rgba(255, 101, 0, .75))
+        drop-shadow(0 0 13px rgba(255, 80, 0, .35));
+
+    opacity: 0;
+
+    mix-blend-mode: screen;
+
+    animation:
+        ghostFloat var(--duration) ease-in-out infinite,
+        ghostFade var(--fade) ease-in-out infinite;
+
+    animation-delay: var(--delay);
+
+    pointer-events: none;
+}
+
+
+/* Среднее движение */
+
+@keyframes ghostFloat {
+
+    0% {
+        transform:
+            translate3d(0, 0, 0)
+            rotate(-3deg);
+    }
+
+    25% {
+        transform:
+            translate3d(35px, -25px, 0)
+            rotate(3deg);
+    }
+
+    50% {
+        transform:
+            translate3d(-25px, -55px, 0)
+            rotate(-2deg);
+    }
+
+    75% {
+        transform:
+            translate3d(-40px, -20px, 0)
+            rotate(3deg);
+    }
+
+    100% {
+        transform:
+            translate3d(0, 0, 0)
+            rotate(-3deg);
+    }
+}
+
+
+/* Плавное появление / исчезновение */
+
+@keyframes ghostFade {
+
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: var(--opacity);
+    }
+
+    50% {
+        opacity: var(--opacity);
+    }
+
+    85% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   ЦЕНТРАЛЬНОЕ СВЕЧЕНИЕ
+========================= */
+
+.bg-glow {
+    position: fixed;
+
+    width: 380px;
+    height: 380px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #ff6500;
+
+    filter: blur(180px);
+
+    opacity: .08;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   ПОДСКАЗКА
+========================= */
+
+.help {
+    display: none;
+
+    position: fixed;
+
+    top: 10px;
+    right: 10px;
+
+    width: 225px;
+
+    padding: 13px 15px;
+
+    z-index: 999;
+
+    background: rgba(10, 6, 2, .97);
+
+    border: 1px solid rgba(255, 105, 0, .65);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 22px rgba(255, 80, 0, .20);
+
+    font-size: 12px;
+
+    line-height: 1.45;
+}
+
+.help-title {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.help-text {
+    color: #a39b95;
+}
+
+.help-text b {
+    color: #fff;
+}
+
+
+/* =========================
+   СТРЕЛКА
+========================= */
+
+.arrow {
+    position: absolute;
+
+    top: -29px;
+    right: 13px;
+
+    width: 30px;
+    height: 30px;
+
+    pointer-events: none;
+}
+
+.arrow::before {
+    content: "";
+
+    position: absolute;
+
+    width: 3px;
+    height: 25px;
+
+    right: 8px;
+    top: 5px;
+
+    border-radius: 5px;
+
+    background: #ff6500;
+
+    transform: rotate(42deg);
+
+    box-shadow:
+        0 0 7px rgba(255, 100, 0, .8);
+}
+
+.arrow::after {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    right: 1px;
+    top: 0;
+
+    border-top: 3px solid #ff6500;
+    border-right: 3px solid #ff6500;
+
+    transform: rotate(42deg);
+
+    filter:
+        drop-shadow(
+            0 0 5px rgba(255, 100, 0, .8)
+        );
+}
+
+
+/* =========================
+   КАРТОЧКА
+========================= */
+
+.card {
+    position: relative;
+
+    width: min(88%, 430px);
+
+    padding: 36px 28px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 12, 3, .97),
+            rgba(5, 3, 0, .98)
+        );
+
+    border: 1px solid rgba(255, 102, 0, .38);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, .85),
+        0 0 40px rgba(255, 80, 0, .07);
+
+    backdrop-filter: blur(18px);
+
+    z-index: 5;
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ff6500,
+            transparent
+        );
+
+    box-shadow:
+        0 0 10px #ff6500;
+}
+
+
+/* =========================
+   ИКОНКА
+========================= */
+
+.icon {
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 100, 0, .15),
+            rgba(50, 20, 0, .12)
+        );
+
+    border: 1px solid rgba(255, 115, 30, .5);
+
+    font-size: 28px;
+
+    box-shadow:
+        0 0 25px rgba(255, 90, 0, .14);
+
+    user-select: none;
+}
+
+
+/* =========================
+   ЗАГОЛОВОК
+========================= */
+
+h1 {
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    letter-spacing: .3px;
+
+    text-shadow:
+        0 0 20px rgba(255, 100, 0, .25);
+}
+
+
+/* =========================
+   ОПИСАНИЕ
+========================= */
+
+.description {
+    color: #918b86;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 27px;
+}
+
+
+/* =========================
+   КНОПКА
+========================= */
+
+.bot-button {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    height: 58px;
+
+    padding: 0 18px;
+
+    border: 1px solid #ff6500;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(190, 65, 0, .22),
+            rgba(25, 10, 0, .95)
+        );
+
+    color: #fff;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 16px rgba(255, 90, 0, .22);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    animation:
+        pulse 3s ease-in-out infinite;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bot-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 65%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, .18),
+            transparent
+        );
+
+    transform: skewX(-25deg);
+}
+
+.bot-button:hover::before {
+    animation: shine .8s ease;
+}
+
+.bot-button:hover {
+    transform: translateY(-2px);
+
+    border-color: #ff913f;
+
+    box-shadow:
+        0 0 30px rgba(255, 90, 0, .48),
+        0 10px 30px rgba(0, 0, 0, .35);
+}
+
+.bot-button:active {
+    transform: scale(.98);
+}
+
+
+/* =========================
+   АНИМАЦИЯ КНОПКИ
+========================= */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 14px rgba(255, 90, 0, .18);
+    }
+
+    50% {
+        box-shadow:
+            0 0 27px rgba(255, 90, 0, .42),
+            0 0 45px rgba(255, 90, 0, .08);
+    }
+}
+
+@keyframes shine {
+
+    from {
+        left: -120%;
+    }
+
+    to {
+        left: 160%;
+    }
+}
+
+
+/* =========================
+   НИЖНИЙ ТЕКСТ
+========================= */
+
+.footer-text {
+    margin-top: 17px;
+
+    color: #514a45;
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   ТЕЛЕФОН
+========================= */
+
+@media (max-width: 700px) {
+
+    .help {
+        display: block;
+    }
+
+    .card {
+        width: calc(100% - 30px);
+
+        max-width: 400px;
+
+        padding: 32px 22px 27px;
+
+        border-radius: 22px;
+    }
+
+    .icon {
+        width: 58px;
+        height: 58px;
+
+        margin-bottom: 17px;
+
+        font-size: 25px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .description {
+        font-size: 13px;
+
+        margin-bottom: 23px;
+    }
+
+    .bot-button {
+        height: 55px;
+
+        font-size: 15px;
+    }
+
+    .ghost {
+        filter:
+            sepia(1)
+            saturate(7)
+            hue-rotate(340deg)
+            brightness(1.05)
+            drop-shadow(
+                0 0 5px rgba(255, 101, 0, .7)
+            )
+            drop-shadow(
+                0 0 12px rgba(255, 80, 0, .3)
+            );
+    }
+}
+
+
+/* Маленькие телефоны */
+
+@media (max-width: 380px) {
+
+    .help {
+        width: 210px;
+
+        font-size: 11px;
+    }
+
+    .help-title {
+        font-size: 13px;
+    }
+
+    .card {
+        padding: 28px 18px 24px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ПРИЗРАКИ
+========================= -->
+
+<div
+    class="ghosts"
+    id="ghosts">
+</div>
+
+
+<!-- Фоновое свечение -->
+
+<div class="bg-glow"></div>
+
+
+<!-- =========================
+     ПОДСКАЗКА
+========================= -->
+
+<div class="help">
+
+    <div class="arrow"></div>
+
+    <div class="help-title">
+        ⚠️ Не открывается?
+    </div>
+
+    <div class="help-text">
+        Нажми на <b>•••</b> в правом верхнем углу
+        и выбери <b>«Открыть в браузере»</b>.
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ОСНОВНАЯ КАРТОЧКА
+========================= -->
+
+<div class="card">
+
+    <div class="icon">
+        ⚠️
+    </div>
+
+    <h1>
+        Zero-Trace
+    </h1>
+
+    <div class="description">
+        Нажми на кнопку ниже,<br>
+        чтобы перейти в нашего бота
+    </div>
+
+    <button
+        class="bot-button"
+        onclick="openBot()"
+    >
+        🔸 Переход в нашего бота 🔸
+    </button>
+
+    <div class="footer-text">
+        🔸 Быстрый переход через Telegram
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   ССЫЛКА НА БОТА
+========================= */
+
+const BOT_LINK =
+"https://t.me/ZeroTraceeBbot?start=ref_eyJhnre1ECbTo6ihrP6ne6g";
+
+
+/* =========================
+   ПЕРЕХОД
+========================= */
+
+function openBot() {
+    window.location.href = BOT_LINK;
+}
+
+
+/* =========================
+   КАРТИНКА ПРИЗРАКА
+========================= */
+
+const ghostImage =
+"https://yt3.googleusercontent.com/ytc/AIdro_lfD6PyKAZ1_MwAKpRwZbWwTybjrN_C8BcPHZQTpi7rKhU=s900-c-k-c0x00ffffff-no-rj";
+
+
+/* Контейнер */
+
+const ghostContainer =
+document.getElementById("ghosts");
+
+
+/* =========================
+   СОЗДАНИЕ ПРИЗРАКА
+========================= */
+
+function createGhost() {
+
+    const ghost =
+        document.createElement("img");
+
+    ghost.className =
+        "ghost";
+
+    ghost.src =
+        ghostImage;
+
+
+    /*
+       Размер:
+       45–125 px
+    */
+
+    const size =
+        Math.floor(
+            Math.random() * 80
+        ) + 45;
+
+
+    /*
+       Прозрачность:
+       заметная, но не слишком яркая
+    */
+
+    const opacity =
+        (
+            Math.random() * 0.18
+            + 0.18
+        ).toFixed(2);
+
+
+    /*
+       Средняя скорость:
+       14–21 секунд
+    */
+
+    const duration =
+        Math.floor(
+            Math.random() * 8
+        ) + 14;
+
+
+    /*
+       Скорость исчезновения
+    */
+
+    const fade =
+        Math.floor(
+            Math.random() * 4
+        ) + 6;
+
+
+    /*
+       Случайная задержка
+    */
+
+    const delay =
+        Math.floor(
+            Math.random() * 12
+        ) * -1;
+
+
+    /*
+       Положение
+    */
+
+    const x =
+        Math.random() * 100;
+
+    const y =
+        Math.random() * 100;
+
+
+    /* Передаём значения CSS */
+
+    ghost.style.setProperty(
+        "--size",
+        size + "px"
+    );
+
+    ghost.style.setProperty(
+        "--opacity",
+        opacity
+    );
+
+    ghost.style.setProperty(
+        "--duration",
+        duration + "s"
+    );
+
+    ghost.style.setProperty(
+        "--fade",
+        fade + "s"
+    );
+
+    ghost.style.setProperty(
+        "--delay",
+        delay + "s"
+    );
+
+
+    ghost.style.left =
+        x + "%";
+
+    ghost.style.top =
+        y + "%";
+
+
+    ghostContainer.appendChild(
+        ghost
+    );
+}
+
+
+/* =========================
+   КОЛИЧЕСТВО
+========================= */
+
+const ghostCount =
+    window.innerWidth < 700
+        ? 16
+        : 25;
+
+
+for (
+    let i = 0;
+    i < ghostCount;
+    i++
+) {
+
+    createGhost();
+
+}
+
+
+/* =========================
+   ВОССТАНОВЛЕНИЕ СТРАНИЦЫ
+========================= */
+
+function restorePage() {
+
+    document.documentElement.style.background =
+        "#000";
+
+    document.body.style.background =
+        "radial-gradient(circle at 50% 45%, #1c0d00 0%, #080400 38%, #000000 78%)";
+
+    document.body.style.opacity =
+        "1";
+}
+
+
+window.addEventListener(
+    "pageshow",
+    restorePage
+);
+
+
+window.addEventListener(
+    "focus",
+    restorePage
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function () {
+
+        if (!document.hidden) {
+
+            restorePage();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
