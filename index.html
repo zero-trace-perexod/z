@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -38,7 +37,7 @@ body {
             circle at 50% 45%,
             #1c0b00 0%,
             #090400 40%,
-            #000 82%
+            #000000 82%
         );
 }
 
@@ -50,10 +49,1024 @@ body {
 .ghosts {
     position: fixed;
     inset: 0;
+
     overflow: hidden;
     pointer-events: none;
-    z-index: 0;
+
+    z-index: 1;
 }
 
 .ghost {
-    position
+    position: absolute;
+
+    width: var(--size);
+    height: var(--size);
+
+    object-fit: contain;
+
+    mix-blend-mode: screen;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(255, 101, 0, 0.95)
+        )
+        drop-shadow(
+            0 0 14px
+            rgba(255, 101, 0, 0.65)
+        )
+        drop-shadow(
+            0 0 28px
+            rgba(255, 70, 0, 0.30)
+        );
+
+    opacity: 0;
+
+    will-change:
+        transform,
+        opacity;
+
+    animation:
+        ghostMove var(--duration) ease-in-out infinite,
+        ghostFade var(--fade) ease-in-out infinite;
+
+    animation-delay: var(--delay);
+
+    user-select: none;
+}
+
+
+/* =========================
+   ДВИЖЕНИЕ ПРИЗРАКОВ
+========================= */
+
+@keyframes ghostMove {
+
+    0% {
+        transform:
+            translate3d(0, 0, 0)
+            rotate(-4deg)
+            scale(0.90);
+    }
+
+    20% {
+        transform:
+            translate3d(55px, -35px, 0)
+            rotate(3deg)
+            scale(1);
+    }
+
+    40% {
+        transform:
+            translate3d(-35px, -75px, 0)
+            rotate(-2deg)
+            scale(0.96);
+    }
+
+    60% {
+        transform:
+            translate3d(-70px, -30px, 0)
+            rotate(4deg)
+            scale(1.04);
+    }
+
+    80% {
+        transform:
+            translate3d(30px, 30px, 0)
+            rotate(-3deg)
+            scale(0.97);
+    }
+
+    100% {
+        transform:
+            translate3d(0, 0, 0)
+            rotate(-4deg)
+            scale(0.90);
+    }
+}
+
+
+/* =========================
+   ПОЯВЛЕНИЕ / ИСЧЕЗНОВЕНИЕ
+========================= */
+
+@keyframes ghostFade {
+
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: var(--opacity);
+    }
+
+    45% {
+        opacity: var(--opacity);
+    }
+
+    72% {
+        opacity: calc(var(--opacity) * 0.65);
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   СВЕЧЕНИЕ ФОНА
+========================= */
+
+.bg-glow {
+    position: fixed;
+
+    width: 420px;
+    height: 420px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: #ff6500;
+
+    filter: blur(190px);
+
+    opacity: 0.055;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   ПОДСКАЗКА
+========================= */
+
+.help {
+    display: none;
+
+    position: fixed;
+
+    top: 10px;
+    right: 10px;
+
+    width: 225px;
+
+    padding: 14px 15px;
+
+    z-index: 30;
+
+    background:
+        rgba(7, 4, 1, 0.97);
+
+    border:
+        1px solid
+        rgba(255, 105, 0, 0.65);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 22px
+        rgba(255, 80, 0, 0.18);
+
+    font-size: 12px;
+
+    line-height: 1.45;
+}
+
+.help-title {
+    font-size: 14px;
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.help-text {
+    color: #a39b95;
+}
+
+.help-text b {
+    color: #fff;
+}
+
+
+/* =========================
+   СТРЕЛКА
+========================= */
+
+.arrow {
+    position: absolute;
+
+    top: -29px;
+    right: 13px;
+
+    width: 30px;
+    height: 30px;
+
+    pointer-events: none;
+}
+
+.arrow::before {
+    content: "";
+
+    position: absolute;
+
+    width: 3px;
+    height: 25px;
+
+    right: 8px;
+    top: 5px;
+
+    border-radius: 5px;
+
+    background: #ff6500;
+
+    transform: rotate(42deg);
+
+    box-shadow:
+        0 0 7px
+        rgba(255, 100, 0, 0.8);
+}
+
+.arrow::after {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    right: 1px;
+    top: 0;
+
+    border-top:
+        3px solid #ff6500;
+
+    border-right:
+        3px solid #ff6500;
+
+    transform: rotate(42deg);
+}
+
+
+/* =========================
+   КАРТОЧКА
+========================= */
+
+.card {
+    position: relative;
+
+    width: min(88%, 430px);
+
+    padding: 36px 28px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 12, 3, 0.985),
+            rgba(5, 3, 0, 0.99)
+        );
+
+    border:
+        1px solid
+        rgba(255, 102, 0, 0.38);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.9),
+
+        0 0 40px
+        rgba(255, 80, 0, 0.07);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    z-index: 10;
+}
+
+
+/* Верхняя линия */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ff6500,
+            transparent
+        );
+
+    box-shadow:
+        0 0 10px #ff6500;
+}
+
+
+/* =========================
+   ИКОНКА
+========================= */
+
+.icon {
+    width: 64px;
+    height: 64px;
+
+    margin:
+        0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 100, 0, 0.15),
+            rgba(50, 20, 0, 0.12)
+        );
+
+    border:
+        1px solid
+        rgba(255, 115, 30, 0.5);
+
+    font-size: 28px;
+
+    box-shadow:
+        0 0 25px
+        rgba(255, 90, 0, 0.14);
+}
+
+
+/* =========================
+   ЗАГОЛОВОК
+========================= */
+
+h1 {
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    letter-spacing: 0.3px;
+
+    text-shadow:
+        0 0 20px
+        rgba(255, 100, 0, 0.25);
+}
+
+
+/* =========================
+   ОПИСАНИЕ
+========================= */
+
+.description {
+    color: #918b86;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 12px;
+}
+
+
+/* =========================
+   ПОЛЬЗОВАТЕЛИ
+========================= */
+
+.users {
+    display: inline-block;
+
+    margin-bottom: 25px;
+
+    padding:
+        7px 13px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 101, 0, 0.07);
+
+    border:
+        1px solid
+        rgba(255, 101, 0, 0.25);
+
+    color: #ff9a55;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 0 15px
+        rgba(255, 80, 0, 0.08);
+}
+
+
+/* =========================
+   КНОПКИ
+========================= */
+
+.buttons {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+    width: 100%;
+}
+
+.bot-button {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+
+    height: 58px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid #ff6500;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(190, 65, 0, 0.22),
+            rgba(25, 10, 0, 0.95)
+        );
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 16px
+        rgba(255, 90, 0, 0.22);
+
+    animation:
+        pulse 3s ease-in-out infinite;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+/* Блик */
+
+.bot-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 65%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.18),
+            transparent
+        );
+
+    transform:
+        skewX(-25deg);
+}
+
+.bot-button:hover::before {
+    animation:
+        shine 0.8s ease;
+}
+
+.bot-button:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        #ff913f;
+
+    box-shadow:
+        0 0 30px
+        rgba(255, 90, 0, 0.48),
+
+        0 10px 30px
+        rgba(0, 0, 0, 0.35);
+}
+
+.bot-button:active {
+    transform:
+        scale(0.98);
+}
+
+
+/* =========================
+   АНИМАЦИЯ КНОПКИ
+========================= */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 14px
+            rgba(255, 90, 0, 0.18);
+    }
+
+    50% {
+        box-shadow:
+            0 0 27px
+            rgba(255, 90, 0, 0.42),
+
+            0 0 45px
+            rgba(255, 90, 0, 0.08);
+    }
+}
+
+@keyframes shine {
+
+    from {
+        left: -120%;
+    }
+
+    to {
+        left: 160%;
+    }
+}
+
+
+/* =========================
+   НИЖНИЙ ТЕКСТ
+========================= */
+
+.footer-text {
+    margin-top: 17px;
+
+    color: #514a45;
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   ТЕЛЕФОН
+========================= */
+
+@media (max-width: 700px) {
+
+    .help {
+        display: block;
+    }
+
+    .card {
+        width:
+            calc(100% - 30px);
+
+        max-width: 400px;
+
+        padding:
+            32px 22px 27px;
+
+        border-radius:
+            22px;
+    }
+
+    .icon {
+        width: 58px;
+        height: 58px;
+
+        margin-bottom: 17px;
+
+        font-size: 25px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .description {
+        font-size: 13px;
+    }
+
+    .users {
+        margin-bottom: 23px;
+    }
+
+    .bot-button {
+        height: 55px;
+
+        font-size: 14px;
+    }
+
+    .ghost {
+        filter:
+            drop-shadow(
+                0 0 5px
+                rgba(255, 101, 0, 0.9)
+            )
+            drop-shadow(
+                0 0 13px
+                rgba(255, 101, 0, 0.55)
+            );
+    }
+}
+
+
+/* =========================
+   МАЛЕНЬКИЙ ТЕЛЕФОН
+========================= */
+
+@media (max-width: 380px) {
+
+    .help {
+        width: 210px;
+
+        font-size: 11px;
+    }
+
+    .help-title {
+        font-size: 13px;
+    }
+
+    .card {
+        padding:
+            28px 18px 24px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .bot-button {
+        font-size: 13px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ФОН
+========================= -->
+
+<div
+    class="ghosts"
+    id="ghosts">
+</div>
+
+<div class="bg-glow"></div>
+
+
+<!-- =========================
+     ПОДСКАЗКА
+========================= -->
+
+<div class="help">
+
+    <div class="arrow"></div>
+
+    <div class="help-title">
+        ⚠️ Не открывается?
+    </div>
+
+    <div class="help-text">
+        Нажми на <b>•••</b> в правом верхнем углу
+        и выбери <b>«Открыть в браузере»</b>.
+    </div>
+
+</div>
+
+
+<!-- =========================
+     КАРТОЧКА
+========================= -->
+
+<div class="card">
+
+    <div class="icon">
+        ⚠️
+    </div>
+
+    <h1>
+        Zero-Trace
+    </h1>
+
+    <div class="description">
+        Выбери нужный раздел ниже
+    </div>
+
+    <div class="users">
+        🟠 1000+ активных пользователей
+    </div>
+
+
+    <!-- =========================
+         КНОПКИ
+    ========================= -->
+
+    <div class="buttons">
+
+        <button
+            class="bot-button"
+            onclick="openBot1()">
+
+            🔸 бот для сноса ⚠️
+
+        </button>
+
+
+        <button
+            class="bot-button"
+            onclick="openBot2()">
+
+            🔸 бот для пробива 🔍
+
+        </button>
+
+    </div>
+
+
+    <div class="footer-text">
+        🔸 Быстрый переход через Telegram
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   ССЫЛКИ
+========================= */
+
+const BOT_LINK_1 =
+"https://t.me/ZeroTraceeBbot?start=ref_eyJhnre1ECbTo6ihrP6ne6g";
+
+const BOT_LINK_2 =
+"https://t.me/FaidikS_bot?start=cH7Uft92";
+
+
+/* =========================
+   ПЕРЕХОДЫ
+========================= */
+
+function openBot1() {
+
+    window.location.href =
+        BOT_LINK_1;
+
+}
+
+
+function openBot2() {
+
+    window.location.href =
+        BOT_LINK_2;
+
+}
+
+
+/* =========================
+   ПРИЗРАК
+========================= */
+
+const ghostImage =
+"IMG_1961.png";
+
+const ghostContainer =
+document.getElementById("ghosts");
+
+
+/* =========================
+   СОЗДАНИЕ ПРИЗРАКА
+========================= */
+
+function createGhost() {
+
+    const ghost =
+        document.createElement("img");
+
+
+    ghost.className =
+        "ghost";
+
+
+    ghost.src =
+        ghostImage;
+
+
+    /*
+       Размер:
+       60–120 пикселей
+    */
+
+    const size =
+        Math.floor(
+            Math.random() * 61
+        ) + 60;
+
+
+    /*
+       Яркость:
+       призраки заметны,
+       но не закрывают сайт
+    */
+
+    const opacity =
+        (
+            Math.random() * 0.15
+            + 0.18
+        ).toFixed(2);
+
+
+    /*
+       Средняя скорость
+    */
+
+    const duration =
+        Math.floor(
+            Math.random() * 8
+        ) + 15;
+
+
+    const fade =
+        Math.floor(
+            Math.random() * 5
+        ) + 8;
+
+
+    /*
+       Случайное начало
+    */
+
+    const delay =
+        -Math.floor(
+            Math.random() * 18
+        );
+
+
+    /*
+       Случайное положение
+    */
+
+    const x =
+        Math.random() * 100;
+
+    const y =
+        Math.random() * 100;
+
+
+    ghost.style.setProperty(
+        "--size",
+        size + "px"
+    );
+
+    ghost.style.setProperty(
+        "--opacity",
+        opacity
+    );
+
+    ghost.style.setProperty(
+        "--duration",
+        duration + "s"
+    );
+
+    ghost.style.setProperty(
+        "--fade",
+        fade + "s"
+    );
+
+    ghost.style.setProperty(
+        "--delay",
+        delay + "s"
+    );
+
+
+    ghost.style.left =
+        x + "%";
+
+    ghost.style.top =
+        y + "%";
+
+
+    ghostContainer.appendChild(
+        ghost
+    );
+}
+
+
+/* =========================
+   КОЛИЧЕСТВО ПРИЗРАКОВ
+========================= */
+
+const ghostCount =
+    window.innerWidth < 700
+        ? 14
+        : 22;
+
+
+for (
+    let i = 0;
+    i < ghostCount;
+    i++
+) {
+
+    createGhost();
+
+}
+
+
+/* =========================
+   ВОССТАНОВЛЕНИЕ СТРАНИЦЫ
+========================= */
+
+function restorePage() {
+
+    document.documentElement.style.background =
+        "#000";
+
+    document.body.style.background =
+        "radial-gradient(circle at 50% 45%, #1c0b00 0%, #090400 40%, #000000 82%)";
+
+    document.body.style.opacity =
+        "1";
+}
+
+
+window.addEventListener(
+    "pageshow",
+    restorePage
+);
+
+
+window.addEventListener(
+    "focus",
+    restorePage
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function () {
+
+        if (!document.hidden) {
+
+            restorePage();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
