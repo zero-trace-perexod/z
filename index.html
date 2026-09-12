@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Zero-Trace</title>
 
 <style>
-
 * {
     margin: 0;
     padding: 0;
@@ -24,35 +22,31 @@ body {
 body {
     min-height: 100vh;
     overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-family: Arial, Helvetica, sans-serif;
     color: #fff;
 
     background:
         radial-gradient(
             circle at 50% 45%,
-            #1c0b00 0%,
-            #090400 40%,
-            #000000 82%
+            #000d1c 0%,
+            #000409 40%,
+            #000 82%
         );
 }
 
 
 /* =========================
-   ПРИЗРАКИ
+   ПРИЗРАКИ НА ФОНЕ
 ========================= */
 
 .ghosts {
     position: fixed;
     inset: 0;
-
     overflow: hidden;
     pointer-events: none;
-
     z-index: 1;
 }
 
@@ -67,24 +61,13 @@ body {
     mix-blend-mode: screen;
 
     filter:
-        drop-shadow(
-            0 0 5px
-            rgba(255, 101, 0, 0.95)
-        )
-        drop-shadow(
-            0 0 14px
-            rgba(255, 101, 0, 0.65)
-        )
-        drop-shadow(
-            0 0 28px
-            rgba(255, 70, 0, 0.30)
-        );
+        drop-shadow(0 0 5px rgba(0,120,255,.95))
+        drop-shadow(0 0 14px rgba(0,110,255,.65))
+        drop-shadow(0 0 28px rgba(0,80,255,.30));
 
     opacity: 0;
 
-    will-change:
-        transform,
-        opacity;
+    will-change: transform, opacity;
 
     animation:
         ghostMove var(--duration) ease-in-out infinite,
@@ -96,59 +79,51 @@ body {
 }
 
 
-/* =========================
-   ДВИЖЕНИЕ ПРИЗРАКОВ
-========================= */
-
 @keyframes ghostMove {
 
     0% {
         transform:
-            translate3d(0, 0, 0)
+            translate3d(0,0,0)
             rotate(-4deg)
-            scale(0.90);
+            scale(.90);
     }
 
     20% {
         transform:
-            translate3d(55px, -35px, 0)
+            translate3d(55px,-35px,0)
             rotate(3deg)
             scale(1);
     }
 
     40% {
         transform:
-            translate3d(-35px, -75px, 0)
+            translate3d(-35px,-75px,0)
             rotate(-2deg)
-            scale(0.96);
+            scale(.96);
     }
 
     60% {
         transform:
-            translate3d(-70px, -30px, 0)
+            translate3d(-70px,-30px,0)
             rotate(4deg)
             scale(1.04);
     }
 
     80% {
         transform:
-            translate3d(30px, 30px, 0)
+            translate3d(30px,30px,0)
             rotate(-3deg)
-            scale(0.97);
+            scale(.97);
     }
 
     100% {
         transform:
-            translate3d(0, 0, 0)
+            translate3d(0,0,0)
             rotate(-4deg)
-            scale(0.90);
+            scale(.90);
     }
 }
 
-
-/* =========================
-   ПОЯВЛЕНИЕ / ИСЧЕЗНОВЕНИЕ
-========================= */
 
 @keyframes ghostFade {
 
@@ -165,7 +140,7 @@ body {
     }
 
     72% {
-        opacity: calc(var(--opacity) * 0.65);
+        opacity: calc(var(--opacity) * .65);
     }
 
     90% {
@@ -179,7 +154,7 @@ body {
 
 
 /* =========================
-   СВЕЧЕНИЕ ФОНА
+   ЦЕНТРАЛЬНОЕ СВЕЧЕНИЕ
 ========================= */
 
 .bg-glow {
@@ -191,14 +166,13 @@ body {
     left: 50%;
     top: 50%;
 
-    transform:
-        translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 
-    background: #ff6500;
+    background: #007bff;
 
     filter: blur(190px);
 
-    opacity: 0.055;
+    opacity: .055;
 
     pointer-events: none;
 
@@ -207,7 +181,7 @@ body {
 
 
 /* =========================
-   ПОДСКАЗКА
+   ПОДСКАЗКА НА ТЕЛЕФОНЕ
 ========================= */
 
 .help {
@@ -224,18 +198,14 @@ body {
 
     z-index: 30;
 
-    background:
-        rgba(7, 4, 1, 0.97);
+    background: rgba(1,5,12,.97);
 
-    border:
-        1px solid
-        rgba(255, 105, 0, 0.65);
+    border: 1px solid rgba(0,125,255,.65);
 
     border-radius: 15px;
 
     box-shadow:
-        0 0 22px
-        rgba(255, 80, 0, 0.18);
+        0 0 22px rgba(0,100,255,.18);
 
     font-size: 12px;
 
@@ -245,12 +215,11 @@ body {
 .help-title {
     font-size: 14px;
     font-weight: 700;
-
     margin-bottom: 4px;
 }
 
 .help-text {
-    color: #a39b95;
+    color: #a0a7b0;
 }
 
 .help-text b {
@@ -287,13 +256,12 @@ body {
 
     border-radius: 5px;
 
-    background: #ff6500;
+    background: #007bff;
 
     transform: rotate(42deg);
 
     box-shadow:
-        0 0 7px
-        rgba(255, 100, 0, 0.8);
+        0 0 7px rgba(0,120,255,.8);
 }
 
 .arrow::after {
@@ -307,11 +275,8 @@ body {
     right: 1px;
     top: 0;
 
-    border-top:
-        3px solid #ff6500;
-
-    border-right:
-        3px solid #ff6500;
+    border-top: 3px solid #007bff;
+    border-right: 3px solid #007bff;
 
     transform: rotate(42deg);
 }
@@ -333,22 +298,18 @@ body {
     background:
         linear-gradient(
             145deg,
-            rgba(25, 12, 3, 0.985),
-            rgba(5, 3, 0, 0.99)
+            rgba(2,12,25,.985),
+            rgba(0,3,8,.99)
         );
 
     border:
-        1px solid
-        rgba(255, 102, 0, 0.38);
+        1px solid rgba(0,115,255,.38);
 
     border-radius: 24px;
 
     box-shadow:
-        0 25px 70px
-        rgba(0, 0, 0, 0.9),
-
-        0 0 40px
-        rgba(255, 80, 0, 0.07);
+        0 25px 70px rgba(0,0,0,.9),
+        0 0 40px rgba(0,100,255,.07);
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -356,8 +317,6 @@ body {
     z-index: 10;
 }
 
-
-/* Верхняя линия */
 
 .card::before {
     content: "";
@@ -374,12 +333,12 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            #ff6500,
+            #007bff,
             transparent
         );
 
     box-shadow:
-        0 0 10px #ff6500;
+        0 0 10px #007bff;
 }
 
 
@@ -391,8 +350,7 @@ body {
     width: 64px;
     height: 64px;
 
-    margin:
-        0 auto 20px;
+    margin: 0 auto 20px;
 
     display: flex;
 
@@ -404,19 +362,17 @@ body {
     background:
         linear-gradient(
             145deg,
-            rgba(255, 100, 0, 0.15),
-            rgba(50, 20, 0, 0.12)
+            rgba(0,120,255,.15),
+            rgba(0,25,60,.12)
         );
 
     border:
-        1px solid
-        rgba(255, 115, 30, 0.5);
+        1px solid rgba(0,135,255,.5);
 
     font-size: 28px;
 
     box-shadow:
-        0 0 25px
-        rgba(255, 90, 0, 0.14);
+        0 0 25px rgba(0,110,255,.14);
 }
 
 
@@ -431,11 +387,10 @@ h1 {
 
     margin-bottom: 10px;
 
-    letter-spacing: 0.3px;
+    letter-spacing: .3px;
 
     text-shadow:
-        0 0 20px
-        rgba(255, 100, 0, 0.25);
+        0 0 20px rgba(0,120,255,.25);
 }
 
 
@@ -444,7 +399,7 @@ h1 {
 ========================= */
 
 .description {
-    color: #918b86;
+    color: #8e969f;
 
     font-size: 14px;
 
@@ -463,27 +418,24 @@ h1 {
 
     margin-bottom: 25px;
 
-    padding:
-        7px 13px;
+    padding: 7px 13px;
 
     border-radius: 20px;
 
     background:
-        rgba(255, 101, 0, 0.07);
+        rgba(0,120,255,.07);
 
     border:
-        1px solid
-        rgba(255, 101, 0, 0.25);
+        1px solid rgba(0,120,255,.25);
 
-    color: #ff9a55;
+    color: #5eaeff;
 
     font-size: 12px;
 
     font-weight: 600;
 
     box-shadow:
-        0 0 15px
-        rgba(255, 80, 0, 0.08);
+        0 0 15px rgba(0,100,255,.08);
 }
 
 
@@ -507,22 +459,20 @@ h1 {
     display: block;
 
     width: 100%;
-
     height: 58px;
 
-    padding:
-        0 14px;
+    padding: 0 14px;
 
     border:
-        1px solid #ff6500;
+        1px solid #007bff;
 
     border-radius: 15px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(190, 65, 0, 0.22),
-            rgba(25, 10, 0, 0.95)
+            rgba(0,80,190,.22),
+            rgba(0,10,25,.95)
         );
 
     color: #fff;
@@ -536,23 +486,19 @@ h1 {
     overflow: hidden;
 
     box-shadow:
-        0 0 16px
-        rgba(255, 90, 0, 0.22);
+        0 0 16px rgba(0,100,255,.22);
 
     animation:
         pulse 3s ease-in-out infinite;
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
-
-/* Блик */
 
 .bot-button::before {
     content: "";
@@ -569,62 +515,50 @@ h1 {
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,0.18),
+            rgba(255,255,255,.18),
             transparent
         );
 
-    transform:
-        skewX(-25deg);
+    transform: skewX(-25deg);
 }
+
 
 .bot-button:hover::before {
-    animation:
-        shine 0.8s ease;
+    animation: shine .8s ease;
 }
+
 
 .bot-button:hover {
-    transform:
-        translateY(-2px);
+    transform: translateY(-2px);
 
-    border-color:
-        #ff913f;
+    border-color: #4da3ff;
 
     box-shadow:
-        0 0 30px
-        rgba(255, 90, 0, 0.48),
-
-        0 10px 30px
-        rgba(0, 0, 0, 0.35);
+        0 0 30px rgba(0,110,255,.48),
+        0 10px 30px rgba(0,0,0,.35);
 }
+
 
 .bot-button:active {
-    transform:
-        scale(0.98);
+    transform: scale(.98);
 }
 
-
-/* =========================
-   АНИМАЦИЯ КНОПКИ
-========================= */
 
 @keyframes pulse {
 
     0%,
     100% {
         box-shadow:
-            0 0 14px
-            rgba(255, 90, 0, 0.18);
+            0 0 14px rgba(0,100,255,.18);
     }
 
     50% {
         box-shadow:
-            0 0 27px
-            rgba(255, 90, 0, 0.42),
-
-            0 0 45px
-            rgba(255, 90, 0, 0.08);
+            0 0 27px rgba(0,110,255,.42),
+            0 0 45px rgba(0,90,255,.08);
     }
 }
+
 
 @keyframes shine {
 
@@ -645,14 +579,14 @@ h1 {
 .footer-text {
     margin-top: 17px;
 
-    color: #514a45;
+    color: #4b535c;
 
     font-size: 11px;
 }
 
 
 /* =========================
-   ТЕЛЕФОН
+   МОБИЛЬНАЯ ВЕРСИЯ
 ========================= */
 
 @media (max-width: 700px) {
@@ -662,16 +596,13 @@ h1 {
     }
 
     .card {
-        width:
-            calc(100% - 30px);
+        width: calc(100% - 30px);
 
         max-width: 400px;
 
-        padding:
-            32px 22px 27px;
+        padding: 32px 22px 27px;
 
-        border-radius:
-            22px;
+        border-radius: 22px;
     }
 
     .icon {
@@ -703,20 +634,14 @@ h1 {
 
     .ghost {
         filter:
-            drop-shadow(
-                0 0 5px
-                rgba(255, 101, 0, 0.9)
-            )
-            drop-shadow(
-                0 0 13px
-                rgba(255, 101, 0, 0.55)
-            );
+            drop-shadow(0 0 5px rgba(0,120,255,.9))
+            drop-shadow(0 0 13px rgba(0,110,255,.55));
     }
 }
 
 
 /* =========================
-   МАЛЕНЬКИЙ ТЕЛЕФОН
+   МАЛЕНЬКИЕ ТЕЛЕФОНЫ
 ========================= */
 
 @media (max-width: 380px) {
@@ -732,8 +657,7 @@ h1 {
     }
 
     .card {
-        padding:
-            28px 18px 24px;
+        padding: 28px 18px 24px;
     }
 
     h1 {
@@ -744,7 +668,6 @@ h1 {
         font-size: 13px;
     }
 }
-
 </style>
 </head>
 
@@ -752,22 +675,15 @@ h1 {
 <body>
 
 
-<!-- =========================
-     ФОН
-========================= -->
+<!-- ПРИЗРАКИ -->
+<div class="ghosts" id="ghosts"></div>
 
-<div
-    class="ghosts"
-    id="ghosts">
-</div>
 
+<!-- СВЕЧЕНИЕ -->
 <div class="bg-glow"></div>
 
 
-<!-- =========================
-     ПОДСКАЗКА
-========================= -->
-
+<!-- ПОДСКАЗКА -->
 <div class="help">
 
     <div class="arrow"></div>
@@ -784,14 +700,11 @@ h1 {
 </div>
 
 
-<!-- =========================
-     КАРТОЧКА
-========================= -->
-
+<!-- ОСНОВНАЯ КАРТОЧКА -->
 <div class="card">
 
     <div class="icon">
-        ⚠️
+        ❄️
     </div>
 
     <h1>
@@ -803,38 +716,29 @@ h1 {
     </div>
 
     <div class="users">
-        🟠 1000+ активных пользователей
+        🔵 1000+ активных пользователей
     </div>
-
-
-    <!-- =========================
-         КНОПКИ
-    ========================= -->
 
     <div class="buttons">
 
         <button
             class="bot-button"
-            onclick="openBot1()">
-
-            🔸 бот для сноса ⚠️
-
+            onclick="openBot1()"
+        >
+            🔹 бот для сноса ❄️
         </button>
-
 
         <button
             class="bot-button"
-            onclick="openBot2()">
-
-            🔸 бот для пробива 🔍
-
+            onclick="openBot2()"
+        >
+            🔹 бот для пробива 🔍
         </button>
 
     </div>
 
-
     <div class="footer-text">
-        🔸 Быстрый переход через Telegram
+        🔵 Быстрый переход через Telegram
     </div>
 
 </div>
@@ -842,47 +746,37 @@ h1 {
 
 <script>
 
-
 /* =========================
-   ССЫЛКИ
+   ССЫЛКИ НА БОТОВ
 ========================= */
 
 const BOT_LINK_1 =
-"https://t.me/ZeroTraceeBbot?start=ref_eyJhnre1ECbTo6ihrP6ne6g";
+    "https://t.me/ZeroTraceeBbot?start=ref_eyJhnre1ECbTo6ihrP6ne6g";
 
 const BOT_LINK_2 =
-"https://t.me/FaidikS_bot?start=cH7Uft92";
+    "https://t.me/FaidikS_bot?start=cH7Uft92";
 
-
-/* =========================
-   ПЕРЕХОДЫ
-========================= */
 
 function openBot1() {
-
-    window.location.href =
-        BOT_LINK_1;
-
+    window.location.href = BOT_LINK_1;
 }
 
 
 function openBot2() {
-
-    window.location.href =
-        BOT_LINK_2;
-
+    window.location.href = BOT_LINK_2;
 }
 
 
 /* =========================
-   ПРИЗРАК
+   НОВАЯ КАРТИНКА ПРИЗРАКА
 ========================= */
 
 const ghostImage =
-"IMG_1961.png";
+    "Без названия18_20260909224116.png";
+
 
 const ghostContainer =
-document.getElementById("ghosts");
+    document.getElementById("ghosts");
 
 
 /* =========================
@@ -894,71 +788,34 @@ function createGhost() {
     const ghost =
         document.createElement("img");
 
+    ghost.className = "ghost";
 
-    ghost.className =
-        "ghost";
+    ghost.src = ghostImage;
 
-
-    ghost.src =
-        ghostImage;
-
-
-    /*
-       Размер:
-       60–120 пикселей
-    */
 
     const size =
-        Math.floor(
-            Math.random() * 61
-        ) + 60;
+        Math.floor(Math.random() * 61) + 60;
 
-
-    /*
-       Яркость:
-       призраки заметны,
-       но не закрывают сайт
-    */
 
     const opacity =
-        (
-            Math.random() * 0.15
-            + 0.18
-        ).toFixed(2);
+        (Math.random() * .15 + .18).toFixed(2);
 
-
-    /*
-       Средняя скорость
-    */
 
     const duration =
-        Math.floor(
-            Math.random() * 8
-        ) + 15;
+        Math.floor(Math.random() * 8) + 15;
 
 
     const fade =
-        Math.floor(
-            Math.random() * 5
-        ) + 8;
+        Math.floor(Math.random() * 5) + 8;
 
-
-    /*
-       Случайное начало
-    */
 
     const delay =
-        -Math.floor(
-            Math.random() * 18
-        );
+        -Math.floor(Math.random() * 18);
 
-
-    /*
-       Случайное положение
-    */
 
     const x =
         Math.random() * 100;
+
 
     const y =
         Math.random() * 100;
@@ -969,20 +826,24 @@ function createGhost() {
         size + "px"
     );
 
+
     ghost.style.setProperty(
         "--opacity",
         opacity
     );
+
 
     ghost.style.setProperty(
         "--duration",
         duration + "s"
     );
 
+
     ghost.style.setProperty(
         "--fade",
         fade + "s"
     );
+
 
     ghost.style.setProperty(
         "--delay",
@@ -993,13 +854,12 @@ function createGhost() {
     ghost.style.left =
         x + "%";
 
+
     ghost.style.top =
         y + "%";
 
 
-    ghostContainer.appendChild(
-        ghost
-    );
+    ghostContainer.appendChild(ghost);
 }
 
 
@@ -1034,7 +894,7 @@ function restorePage() {
         "#000";
 
     document.body.style.background =
-        "radial-gradient(circle at 50% 45%, #1c0b00 0%, #090400 40%, #000000 82%)";
+        "radial-gradient(circle at 50% 45%, #000d1c 0%, #000409 40%, #000000 82%)";
 
     document.body.style.opacity =
         "1";
@@ -1058,9 +918,7 @@ document.addEventListener(
     function () {
 
         if (!document.hidden) {
-
             restorePage();
-
         }
 
     }
