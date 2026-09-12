@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zero-Trace</title>
 
 <style>
+
+/* =========================
+   ОСНОВА
+========================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -22,10 +28,13 @@ body {
 body {
     min-height: 100vh;
     overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-family: Arial, Helvetica, sans-serif;
+
     color: #fff;
 
     background:
@@ -39,14 +48,17 @@ body {
 
 
 /* =========================
-   ПРИЗРАКИ НА ФОНЕ
+   ФОНОВЫЕ ПРИЗРАКИ
 ========================= */
 
 .ghosts {
     position: fixed;
     inset: 0;
+
     overflow: hidden;
+
     pointer-events: none;
+
     z-index: 1;
 }
 
@@ -58,20 +70,36 @@ body {
 
     object-fit: contain;
 
+    /*
+       Если у PNG есть чёрный фон,
+       этот режим помогает сделать
+       его менее заметным.
+    */
     mix-blend-mode: screen;
 
     filter:
-        drop-shadow(0 0 5px rgba(0,120,255,.95))
-        drop-shadow(0 0 14px rgba(0,110,255,.65))
-        drop-shadow(0 0 28px rgba(0,80,255,.30));
+        drop-shadow(
+            0 0 5px rgba(0, 120, 255, 0.95)
+        )
+        drop-shadow(
+            0 0 14px rgba(0, 110, 255, 0.65)
+        )
+        drop-shadow(
+            0 0 28px rgba(0, 80, 255, 0.30)
+        );
 
     opacity: 0;
 
-    will-change: transform, opacity;
+    will-change:
+        transform,
+        opacity;
 
     animation:
-        ghostMove var(--duration) ease-in-out infinite,
-        ghostFade var(--fade) ease-in-out infinite;
+        ghostMove var(--duration)
+        ease-in-out infinite,
+
+        ghostFade var(--fade)
+        ease-in-out infinite;
 
     animation-delay: var(--delay);
 
@@ -79,51 +107,59 @@ body {
 }
 
 
+/* =========================
+   ДВИЖЕНИЕ ПРИЗРАКОВ
+========================= */
+
 @keyframes ghostMove {
 
     0% {
         transform:
-            translate3d(0,0,0)
+            translate3d(0, 0, 0)
             rotate(-4deg)
             scale(.90);
     }
 
     20% {
         transform:
-            translate3d(55px,-35px,0)
+            translate3d(55px, -35px, 0)
             rotate(3deg)
             scale(1);
     }
 
     40% {
         transform:
-            translate3d(-35px,-75px,0)
+            translate3d(-35px, -75px, 0)
             rotate(-2deg)
             scale(.96);
     }
 
     60% {
         transform:
-            translate3d(-70px,-30px,0)
+            translate3d(-70px, -30px, 0)
             rotate(4deg)
             scale(1.04);
     }
 
     80% {
         transform:
-            translate3d(30px,30px,0)
+            translate3d(30px, 30px, 0)
             rotate(-3deg)
             scale(.97);
     }
 
     100% {
         transform:
-            translate3d(0,0,0)
+            translate3d(0, 0, 0)
             rotate(-4deg)
             scale(.90);
     }
 }
 
+
+/* =========================
+   ПОЯВЛЕНИЕ / ИСЧЕЗНОВЕНИЕ
+========================= */
 
 @keyframes ghostFade {
 
@@ -154,7 +190,7 @@ body {
 
 
 /* =========================
-   ЦЕНТРАЛЬНОЕ СВЕЧЕНИЕ
+   СИНЕЕ СВЕЧЕНИЕ
 ========================= */
 
 .bg-glow {
@@ -166,7 +202,8 @@ body {
     left: 50%;
     top: 50%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     background: #007bff;
 
@@ -181,7 +218,7 @@ body {
 
 
 /* =========================
-   ПОДСКАЗКА НА ТЕЛЕФОНЕ
+   МОБИЛЬНАЯ ПОДСКАЗКА
 ========================= */
 
 .help {
@@ -198,14 +235,16 @@ body {
 
     z-index: 30;
 
-    background: rgba(1,5,12,.97);
+    background:
+        rgba(1, 5, 12, .97);
 
-    border: 1px solid rgba(0,125,255,.65);
+    border:
+        1px solid rgba(0, 125, 255, .65);
 
     border-radius: 15px;
 
     box-shadow:
-        0 0 22px rgba(0,100,255,.18);
+        0 0 22px rgba(0, 100, 255, .18);
 
     font-size: 12px;
 
@@ -214,7 +253,9 @@ body {
 
 .help-title {
     font-size: 14px;
+
     font-weight: 700;
+
     margin-bottom: 4px;
 }
 
@@ -261,7 +302,7 @@ body {
     transform: rotate(42deg);
 
     box-shadow:
-        0 0 7px rgba(0,120,255,.8);
+        0 0 7px rgba(0, 120, 255, .8);
 }
 
 .arrow::after {
@@ -275,15 +316,18 @@ body {
     right: 1px;
     top: 0;
 
-    border-top: 3px solid #007bff;
-    border-right: 3px solid #007bff;
+    border-top:
+        3px solid #007bff;
+
+    border-right:
+        3px solid #007bff;
 
     transform: rotate(42deg);
 }
 
 
 /* =========================
-   КАРТОЧКА
+   ГЛАВНАЯ КАРТОЧКА
 ========================= */
 
 .card {
@@ -291,32 +335,38 @@ body {
 
     width: min(88%, 430px);
 
-    padding: 36px 28px 30px;
+    padding:
+        36px 28px 30px;
 
     text-align: center;
 
     background:
         linear-gradient(
             145deg,
-            rgba(2,12,25,.985),
-            rgba(0,3,8,.99)
+            rgba(2, 12, 25, .985),
+            rgba(0, 3, 8, .99)
         );
 
     border:
-        1px solid rgba(0,115,255,.38);
+        1px solid rgba(0, 115, 255, .38);
 
     border-radius: 24px;
 
     box-shadow:
-        0 25px 70px rgba(0,0,0,.9),
-        0 0 40px rgba(0,100,255,.07);
+        0 25px 70px rgba(0, 0, 0, .9),
+        0 0 40px rgba(0, 100, 255, .07);
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
 
     z-index: 10;
 }
 
+
+/* Верхняя синяя линия */
 
 .card::before {
     content: "";
@@ -350,7 +400,8 @@ body {
     width: 64px;
     height: 64px;
 
-    margin: 0 auto 20px;
+    margin:
+        0 auto 20px;
 
     display: flex;
 
@@ -362,17 +413,17 @@ body {
     background:
         linear-gradient(
             145deg,
-            rgba(0,120,255,.15),
-            rgba(0,25,60,.12)
+            rgba(0, 120, 255, .15),
+            rgba(0, 25, 60, .12)
         );
 
     border:
-        1px solid rgba(0,135,255,.5);
+        1px solid rgba(0, 135, 255, .5);
 
     font-size: 28px;
 
     box-shadow:
-        0 0 25px rgba(0,110,255,.14);
+        0 0 25px rgba(0, 110, 255, .14);
 }
 
 
@@ -390,7 +441,7 @@ h1 {
     letter-spacing: .3px;
 
     text-shadow:
-        0 0 20px rgba(0,120,255,.25);
+        0 0 20px rgba(0, 120, 255, .25);
 }
 
 
@@ -410,7 +461,7 @@ h1 {
 
 
 /* =========================
-   ПОЛЬЗОВАТЕЛИ
+   СЧЁТЧИК
 ========================= */
 
 .users {
@@ -418,15 +469,16 @@ h1 {
 
     margin-bottom: 25px;
 
-    padding: 7px 13px;
+    padding:
+        7px 13px;
 
     border-radius: 20px;
 
     background:
-        rgba(0,120,255,.07);
+        rgba(0, 120, 255, .07);
 
     border:
-        1px solid rgba(0,120,255,.25);
+        1px solid rgba(0, 120, 255, .25);
 
     color: #5eaeff;
 
@@ -435,7 +487,7 @@ h1 {
     font-weight: 600;
 
     box-shadow:
-        0 0 15px rgba(0,100,255,.08);
+        0 0 15px rgba(0, 100, 255, .08);
 }
 
 
@@ -461,7 +513,8 @@ h1 {
     width: 100%;
     height: 58px;
 
-    padding: 0 14px;
+    padding:
+        0 14px;
 
     border:
         1px solid #007bff;
@@ -471,8 +524,8 @@ h1 {
     background:
         linear-gradient(
             135deg,
-            rgba(0,80,190,.22),
-            rgba(0,10,25,.95)
+            rgba(0, 80, 190, .22),
+            rgba(0, 10, 25, .95)
         );
 
     color: #fff;
@@ -486,7 +539,7 @@ h1 {
     overflow: hidden;
 
     box-shadow:
-        0 0 16px rgba(0,100,255,.22);
+        0 0 16px rgba(0, 100, 255, .22);
 
     animation:
         pulse 3s ease-in-out infinite;
@@ -496,9 +549,12 @@ h1 {
         box-shadow .25s ease,
         border-color .25s ease;
 
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 }
 
+
+/* Блик */
 
 .bot-button::before {
     content: "";
@@ -515,47 +571,66 @@ h1 {
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.18),
+            rgba(255, 255, 255, .18),
             transparent
         );
 
-    transform: skewX(-25deg);
+    transform:
+        skewX(-25deg);
 }
-
 
 .bot-button:hover::before {
-    animation: shine .8s ease;
+    animation:
+        shine .8s ease;
 }
 
+
+/* Наведение */
 
 .bot-button:hover {
-    transform: translateY(-2px);
 
-    border-color: #4da3ff;
+    transform:
+        translateY(-2px);
+
+    border-color:
+        #4da3ff;
 
     box-shadow:
-        0 0 30px rgba(0,110,255,.48),
-        0 10px 30px rgba(0,0,0,.35);
+        0 0 30px rgba(0, 110, 255, .48),
+        0 10px 30px rgba(0, 0, 0, .35);
 }
 
+
+/* Нажатие */
 
 .bot-button:active {
-    transform: scale(.98);
+    transform:
+        scale(.98);
 }
 
+
+/* =========================
+   АНИМАЦИЯ КНОПОК
+========================= */
 
 @keyframes pulse {
 
     0%,
     100% {
+
         box-shadow:
-            0 0 14px rgba(0,100,255,.18);
+            0 0 14px
+            rgba(0, 100, 255, .18);
     }
 
     50% {
+
         box-shadow:
-            0 0 27px rgba(0,110,255,.42),
-            0 0 45px rgba(0,90,255,.08);
+            0 0 27px
+            rgba(0, 110, 255, .42),
+
+            0 0 45px
+            rgba(0, 90, 255, .08);
     }
 }
 
@@ -596,78 +671,119 @@ h1 {
     }
 
     .card {
-        width: calc(100% - 30px);
 
-        max-width: 400px;
+        width:
+            calc(100% - 30px);
 
-        padding: 32px 22px 27px;
+        max-width:
+            400px;
 
-        border-radius: 22px;
+        padding:
+            32px 22px 27px;
+
+        border-radius:
+            22px;
     }
 
+
     .icon {
+
         width: 58px;
         height: 58px;
 
-        margin-bottom: 17px;
+        margin-bottom:
+            17px;
 
-        font-size: 25px;
+        font-size:
+            25px;
     }
+
 
     h1 {
-        font-size: 27px;
+        font-size:
+            27px;
     }
+
 
     .description {
-        font-size: 13px;
+        font-size:
+            13px;
     }
+
 
     .users {
-        margin-bottom: 23px;
+        margin-bottom:
+            23px;
     }
+
 
     .bot-button {
-        height: 55px;
 
-        font-size: 14px;
+        height:
+            55px;
+
+        font-size:
+            14px;
     }
 
+
     .ghost {
+
         filter:
-            drop-shadow(0 0 5px rgba(0,120,255,.9))
-            drop-shadow(0 0 13px rgba(0,110,255,.55));
+            drop-shadow(
+                0 0 5px
+                rgba(0, 120, 255, .9)
+            )
+
+            drop-shadow(
+                0 0 13px
+                rgba(0, 110, 255, .55)
+            );
     }
 }
 
 
 /* =========================
-   МАЛЕНЬКИЕ ТЕЛЕФОНЫ
+   МАЛЕНЬКИЙ ЭКРАН
 ========================= */
 
 @media (max-width: 380px) {
 
     .help {
-        width: 210px;
 
-        font-size: 11px;
+        width:
+            210px;
+
+        font-size:
+            11px;
     }
+
 
     .help-title {
-        font-size: 13px;
+        font-size:
+            13px;
     }
+
 
     .card {
-        padding: 28px 18px 24px;
+
+        padding:
+            28px 18px 24px;
     }
+
 
     h1 {
-        font-size: 25px;
+        font-size:
+            25px;
     }
 
+
     .bot-button {
-        font-size: 13px;
+        font-size:
+            13px;
     }
 }
+
 </style>
 </head>
 
@@ -675,15 +791,25 @@ h1 {
 <body>
 
 
-<!-- ПРИЗРАКИ -->
-<div class="ghosts" id="ghosts"></div>
+<!-- =========================
+     ФОНОВЫЕ ПРИЗРАКИ
+========================= -->
+
+<div
+    class="ghosts"
+    id="ghosts">
+</div>
 
 
-<!-- СВЕЧЕНИЕ -->
+<!-- СИНЕЕ СВЕЧЕНИЕ -->
+
 <div class="bg-glow"></div>
 
 
-<!-- ПОДСКАЗКА -->
+<!-- =========================
+     ПОДСКАЗКА НА ТЕЛЕФОНЕ
+========================= -->
+
 <div class="help">
 
     <div class="arrow"></div>
@@ -694,48 +820,60 @@ h1 {
 
     <div class="help-text">
         Нажми на <b>•••</b> в правом верхнем углу
-        и выбери <b>«Открыть в браузере»</b>.
+        и выбери
+        <b>«Открыть в браузере»</b>.
     </div>
 
 </div>
 
 
-<!-- ОСНОВНАЯ КАРТОЧКА -->
+<!-- =========================
+     ГЛАВНАЯ КАРТОЧКА
+========================= -->
+
 <div class="card">
 
     <div class="icon">
-        ❄️
+        ⚠️
     </div>
+
 
     <h1>
         Zero-Trace
     </h1>
 
+
     <div class="description">
         Выбери нужный раздел ниже
     </div>
+
 
     <div class="users">
         🔵 1000+ активных пользователей
     </div>
 
+
     <div class="buttons">
+
 
         <button
             class="bot-button"
             onclick="openBot1()"
         >
-            🔹 бот для сноса ❄️
+            🔸 бот для сноса ⚠️
         </button>
+
 
         <button
             class="bot-button"
             onclick="openBot2()"
         >
-            🔹 бот для пробива 🔍
+            🔸 бот для пробива 🔍
         </button>
 
+
     </div>
+
 
     <div class="footer-text">
         🔵 Быстрый переход через Telegram
@@ -744,10 +882,11 @@ h1 {
 </div>
 
 
+
 <script>
 
 /* =========================
-   ССЫЛКИ НА БОТОВ
+   ССЫЛКИ
 ========================= */
 
 const BOT_LINK_1 =
@@ -757,23 +896,34 @@ const BOT_LINK_2 =
     "https://t.me/FaidikS_bot?start=cH7Uft92";
 
 
+/* =========================
+   ОТКРЫТИЕ ССЫЛОК
+========================= */
+
 function openBot1() {
-    window.location.href = BOT_LINK_1;
+
+    window.location.href =
+        BOT_LINK_1;
 }
 
 
 function openBot2() {
-    window.location.href = BOT_LINK_2;
+
+    window.location.href =
+        BOT_LINK_2;
 }
 
 
-/* =========================
-   НОВАЯ КАРТИНКА ПРИЗРАКА
-========================= */
+/* ==================================================
+   ВАЖНО:
+   ЗДЕСЬ УКАЗАНО ТОЧНОЕ НАЗВАНИЕ НОВОГО PNG
+================================================== */
 
 const ghostImage =
     "Без названия18_20260909224116.png";
 
+
+/* Контейнер */
 
 const ghostContainer =
     document.getElementById("ghosts");
@@ -788,30 +938,62 @@ function createGhost() {
     const ghost =
         document.createElement("img");
 
-    ghost.className = "ghost";
 
-    ghost.src = ghostImage;
+    ghost.className =
+        "ghost";
 
+
+    /*
+       Используем новую картинку
+       из твоего репозитория.
+    */
+
+    ghost.src =
+        ghostImage;
+
+
+    /* Размер */
 
     const size =
-        Math.floor(Math.random() * 61) + 60;
+        Math.floor(
+            Math.random() * 61
+        ) + 60;
 
+
+    /* Прозрачность */
 
     const opacity =
-        (Math.random() * .15 + .18).toFixed(2);
+        (
+            Math.random() * .15
+            + .18
+        ).toFixed(2);
 
+
+    /* Скорость движения */
 
     const duration =
-        Math.floor(Math.random() * 8) + 15;
+        Math.floor(
+            Math.random() * 8
+        ) + 15;
 
+
+    /* Скорость появления */
 
     const fade =
-        Math.floor(Math.random() * 5) + 8;
+        Math.floor(
+            Math.random() * 5
+        ) + 8;
 
+
+    /* Случайная задержка */
 
     const delay =
-        -Math.floor(Math.random() * 18);
+        -Math.floor(
+            Math.random() * 18
+        );
 
+
+    /* Положение */
 
     const x =
         Math.random() * 100;
@@ -820,6 +1002,8 @@ function createGhost() {
     const y =
         Math.random() * 100;
 
+
+    /* CSS-переменные */
 
     ghost.style.setProperty(
         "--size",
@@ -859,7 +1043,11 @@ function createGhost() {
         y + "%";
 
 
-    ghostContainer.appendChild(ghost);
+    /* Добавляем на страницу */
+
+    ghostContainer.appendChild(
+        ghost
+    );
 }
 
 
@@ -880,7 +1068,6 @@ for (
 ) {
 
     createGhost();
-
 }
 
 
@@ -893,13 +1080,19 @@ function restorePage() {
     document.documentElement.style.background =
         "#000";
 
+
     document.body.style.background =
         "radial-gradient(circle at 50% 45%, #000d1c 0%, #000409 40%, #000000 82%)";
+
 
     document.body.style.opacity =
         "1";
 }
 
+
+/* =========================
+   СОБЫТИЯ
+========================= */
 
 window.addEventListener(
     "pageshow",
@@ -918,9 +1111,9 @@ document.addEventListener(
     function () {
 
         if (!document.hidden) {
+
             restorePage();
         }
-
     }
 );
 
