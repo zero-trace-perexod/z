@@ -1,1121 +1,493 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zero-Trace</title>
+<meta name="theme-color" content="#05080d">
+<title>ZERO TRACE</title>
 
 <style>
-
-/* =========================
-   ОСНОВА
-========================= */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-    background: #000;
+:root {
+    --blue: #168cff;
+    --cyan: #00c8ff;
+    --bg: #05070b;
+    --text: #f5f8ff;
+    --muted: #9299a8;
 }
 
 body {
     min-height: 100vh;
-    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 35%, #09213b 0%, transparent 55%),
+        #05070b;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
+    padding: 22px;
+    overflow-x: hidden;
+}
 
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.top {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-    color: #fff;
-
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            #000d1c 0%,
-            #000409 40%,
-            #000 82%
-        );
+    justify-content: flex-end;
 }
 
-
-/* =========================
-   ФОНОВЫЕ ПРИЗРАКИ
-========================= */
-
-.ghosts {
-    position: fixed;
-    inset: 0;
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-    z-index: 1;
+.lang {
+    display: flex;
+    padding: 5px;
+    border: 1px solid #252c37;
+    background: #10141b;
+    border-radius: 40px;
 }
 
-.ghost {
-    position: absolute;
-
-    width: var(--size);
-    height: var(--size);
-
-    object-fit: contain;
-
-    /*
-       Если у PNG есть чёрный фон,
-       этот режим помогает сделать
-       его менее заметным.
-    */
-    mix-blend-mode: screen;
-
-    filter:
-        drop-shadow(
-            0 0 5px rgba(0, 120, 255, 0.95)
-        )
-        drop-shadow(
-            0 0 14px rgba(0, 110, 255, 0.65)
-        )
-        drop-shadow(
-            0 0 28px rgba(0, 80, 255, 0.30)
-        );
-
-    opacity: 0;
-
-    will-change:
-        transform,
-        opacity;
-
-    animation:
-        ghostMove var(--duration)
-        ease-in-out infinite,
-
-        ghostFade var(--fade)
-        ease-in-out infinite;
-
-    animation-delay: var(--delay);
-
-    user-select: none;
-}
-
-
-/* =========================
-   ДВИЖЕНИЕ ПРИЗРАКОВ
-========================= */
-
-@keyframes ghostMove {
-
-    0% {
-        transform:
-            translate3d(0, 0, 0)
-            rotate(-4deg)
-            scale(.90);
-    }
-
-    20% {
-        transform:
-            translate3d(55px, -35px, 0)
-            rotate(3deg)
-            scale(1);
-    }
-
-    40% {
-        transform:
-            translate3d(-35px, -75px, 0)
-            rotate(-2deg)
-            scale(.96);
-    }
-
-    60% {
-        transform:
-            translate3d(-70px, -30px, 0)
-            rotate(4deg)
-            scale(1.04);
-    }
-
-    80% {
-        transform:
-            translate3d(30px, 30px, 0)
-            rotate(-3deg)
-            scale(.97);
-    }
-
-    100% {
-        transform:
-            translate3d(0, 0, 0)
-            rotate(-4deg)
-            scale(.90);
-    }
-}
-
-
-/* =========================
-   ПОЯВЛЕНИЕ / ИСЧЕЗНОВЕНИЕ
-========================= */
-
-@keyframes ghostFade {
-
-    0% {
-        opacity: 0;
-    }
-
-    15% {
-        opacity: var(--opacity);
-    }
-
-    45% {
-        opacity: var(--opacity);
-    }
-
-    72% {
-        opacity: calc(var(--opacity) * .65);
-    }
-
-    90% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-
-/* =========================
-   СИНЕЕ СВЕЧЕНИЕ
-========================= */
-
-.bg-glow {
-    position: fixed;
-
-    width: 420px;
-    height: 420px;
-
-    left: 50%;
-    top: 50%;
-
-    transform:
-        translate(-50%, -50%);
-
-    background: #007bff;
-
-    filter: blur(190px);
-
-    opacity: .055;
-
-    pointer-events: none;
-
-    z-index: 2;
-}
-
-
-/* =========================
-   МОБИЛЬНАЯ ПОДСКАЗКА
-========================= */
-
-.help {
-    display: none;
-
-    position: fixed;
-
-    top: 10px;
-    right: 10px;
-
-    width: 225px;
-
-    padding: 14px 15px;
-
-    z-index: 30;
-
-    background:
-        rgba(1, 5, 12, .97);
-
-    border:
-        1px solid rgba(0, 125, 255, .65);
-
-    border-radius: 15px;
-
-    box-shadow:
-        0 0 22px rgba(0, 100, 255, .18);
-
-    font-size: 12px;
-
-    line-height: 1.45;
-}
-
-.help-title {
+.lang button {
+    border: 0;
+    background: transparent;
+    color: #858d9c;
+    padding: 10px 19px;
+    border-radius: 30px;
     font-size: 14px;
-
-    font-weight: 700;
-
-    margin-bottom: 4px;
 }
 
-.help-text {
-    color: #a0a7b0;
+.lang button.active {
+    background: #202a38;
+    color: white;
 }
 
-.help-text b {
-    color: #fff;
-}
-
-
-/* =========================
-   СТРЕЛКА
-========================= */
-
-.arrow {
-    position: absolute;
-
-    top: -29px;
-    right: 13px;
-
-    width: 30px;
-    height: 30px;
-
-    pointer-events: none;
-}
-
-.arrow::before {
-    content: "";
-
-    position: absolute;
-
-    width: 3px;
-    height: 25px;
-
-    right: 8px;
-    top: 5px;
-
-    border-radius: 5px;
-
-    background: #007bff;
-
-    transform: rotate(42deg);
-
-    box-shadow:
-        0 0 7px rgba(0, 120, 255, .8);
-}
-
-.arrow::after {
-    content: "";
-
-    position: absolute;
-
-    width: 10px;
-    height: 10px;
-
-    right: 1px;
-    top: 0;
-
-    border-top:
-        3px solid #007bff;
-
-    border-right:
-        3px solid #007bff;
-
-    transform: rotate(42deg);
-}
-
-
-/* =========================
-   ГЛАВНАЯ КАРТОЧКА
-========================= */
-
-.card {
-    position: relative;
-
-    width: min(88%, 430px);
-
-    padding:
-        36px 28px 30px;
-
+.container {
+    max-width: 750px;
+    margin: 115px auto 70px;
     text-align: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(2, 12, 25, .985),
-            rgba(0, 3, 8, .99)
-        );
-
-    border:
-        1px solid rgba(0, 115, 255, .38);
-
-    border-radius: 24px;
-
-    box-shadow:
-        0 25px 70px rgba(0, 0, 0, .9),
-        0 0 40px rgba(0, 100, 255, .07);
-
-    backdrop-filter:
-        blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
-    z-index: 10;
 }
 
-
-/* Верхняя синяя линия */
-
-.card::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 15%;
-
-    width: 70%;
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #007bff,
-            transparent
-        );
-
-    box-shadow:
-        0 0 10px #007bff;
+.logo {
+    display: inline-block;
+    padding: 17px 32px;
+    border: 1px solid #075c9d;
+    border-radius: 50px;
+    color: var(--cyan);
+    background: #071726;
+    letter-spacing: 5px;
+    font-size: 15px;
+    font-weight: 800;
+    box-shadow: 0 0 30px #008cff18;
 }
-
-
-/* =========================
-   ИКОНКА
-========================= */
-
-.icon {
-    width: 64px;
-    height: 64px;
-
-    margin:
-        0 auto 20px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0, 120, 255, .15),
-            rgba(0, 25, 60, .12)
-        );
-
-    border:
-        1px solid rgba(0, 135, 255, .5);
-
-    font-size: 28px;
-
-    box-shadow:
-        0 0 25px rgba(0, 110, 255, .14);
-}
-
-
-/* =========================
-   ЗАГОЛОВОК
-========================= */
 
 h1 {
-    font-size: 30px;
-
-    font-weight: 700;
-
-    margin-bottom: 10px;
-
-    letter-spacing: .3px;
-
-    text-shadow:
-        0 0 20px rgba(0, 120, 255, .25);
+    margin-top: 35px;
+    font-size: clamp(42px, 9vw, 65px);
+    font-weight: 850;
+    letter-spacing: -2px;
 }
 
-
-/* =========================
-   ОПИСАНИЕ
-========================= */
-
-.description {
-    color: #8e969f;
-
-    font-size: 14px;
-
+.subtitle {
+    color: var(--muted);
+    font-size: 19px;
+    margin-top: 17px;
     line-height: 1.5;
+}
 
+.card {
+    margin-top: 75px;
+    padding: 45px 35px;
+    border: 1px solid #293644;
+    border-radius: 32px;
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent,
+            transparent 24px,
+            #168cff08 25px,
+            #168cff08 27px
+        ),
+        linear-gradient(145deg, #102337, #090c12 75%);
+    box-shadow:
+        0 0 50px #008cff0d,
+        inset 0 0 35px #168cff08;
+}
+
+.symbol {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 27px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #1267a5;
+    border-radius: 25px;
+    background: #09213a;
+    color: var(--cyan);
+    font-size: 43px;
+    box-shadow: 0 0 30px #008cff19;
+}
+
+.card h2 {
+    font-size: clamp(23px, 5vw, 32px);
     margin-bottom: 12px;
 }
 
-
-/* =========================
-   СЧЁТЧИК
-========================= */
-
-.users {
-    display: inline-block;
-
-    margin-bottom: 25px;
-
-    padding:
-        7px 13px;
-
-    border-radius: 20px;
-
-    background:
-        rgba(0, 120, 255, .07);
-
-    border:
-        1px solid rgba(0, 120, 255, .25);
-
-    color: #5eaeff;
-
-    font-size: 12px;
-
-    font-weight: 600;
-
-    box-shadow:
-        0 0 15px rgba(0, 100, 255, .08);
+.description {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 35px;
+    line-height: 1.5;
 }
 
-
-/* =========================
-   КНОПКИ
-========================= */
-
-.buttons {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 13px;
-
+.main-btn {
     width: 100%;
-}
-
-.bot-button {
-    position: relative;
-
     display: block;
+    border: 0;
+    padding: 20px 15px;
+    border-radius: 18px;
+    margin-top: 16px;
+    color: white;
+    font-weight: 750;
+    font-size: 17px;
+    background: linear-gradient(110deg, #087bea, #00b9ed);
+    box-shadow: 0 5px 25px #008cff30;
+    transition: .2s;
+}
 
-    width: 100%;
-    height: 58px;
+.main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 35px #008cff55;
+}
 
-    padding:
-        0 14px;
+.secondary {
+    background: #101720;
+    border: 1px solid #344253;
+    box-shadow: none;
+}
 
-    border:
-        1px solid #007bff;
+.secondary:hover {
+    background: #172536;
+}
 
-    border-radius: 15px;
+.warning {
+    max-width: 750px;
+    margin: 0 auto 35px;
+    padding: 19px 22px;
+    border: 1px solid #69511e;
+    border-radius: 17px;
+    background: #17150e;
+    color: #e7c477;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: left;
+}
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0, 80, 190, .22),
-            rgba(0, 10, 25, .95)
-        );
+.warning strong {
+    color: #ffcf61;
+}
 
-    color: #fff;
+.result {
+    display: none;
+}
 
+.link {
+    word-break: break-all;
+    color: #75caff;
     font-size: 15px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 0 16px rgba(0, 100, 255, .22);
-
-    animation:
-        pulse 3s ease-in-out infinite;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease;
-
-    -webkit-tap-highlight-color:
-        transparent;
+    margin: 15px 0 25px;
+    line-height: 1.6;
 }
 
-
-/* Блик */
-
-.bot-button::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: -120%;
-
-    width: 65%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, .18),
-            transparent
-        );
-
-    transform:
-        skewX(-25deg);
+.back {
+    color: #91a0b2;
+    background: transparent;
+    border: 0;
+    padding: 15px;
+    margin-top: 12px;
 }
 
-.bot-button:hover::before {
-    animation:
-        shine .8s ease;
+footer {
+    color: #535e6d;
+    text-align: center;
+    font-size: 12px;
+    padding: 20px;
 }
 
-
-/* Наведение */
-
-.bot-button:hover {
-
-    transform:
-        translateY(-2px);
-
-    border-color:
-        #4da3ff;
-
-    box-shadow:
-        0 0 30px rgba(0, 110, 255, .48),
-        0 10px 30px rgba(0, 0, 0, .35);
-}
-
-
-/* Нажатие */
-
-.bot-button:active {
-    transform:
-        scale(.98);
-}
-
-
-/* =========================
-   АНИМАЦИЯ КНОПОК
-========================= */
-
-@keyframes pulse {
-
-    0%,
-    100% {
-
-        box-shadow:
-            0 0 14px
-            rgba(0, 100, 255, .18);
+@media(max-width: 600px) {
+    body {
+        padding: 15px;
     }
 
-    50% {
-
-        box-shadow:
-            0 0 27px
-            rgba(0, 110, 255, .42),
-
-            0 0 45px
-            rgba(0, 90, 255, .08);
-    }
-}
-
-
-@keyframes shine {
-
-    from {
-        left: -120%;
-    }
-
-    to {
-        left: 160%;
-    }
-}
-
-
-/* =========================
-   НИЖНИЙ ТЕКСТ
-========================= */
-
-.footer-text {
-    margin-top: 17px;
-
-    color: #4b535c;
-
-    font-size: 11px;
-}
-
-
-/* =========================
-   МОБИЛЬНАЯ ВЕРСИЯ
-========================= */
-
-@media (max-width: 700px) {
-
-    .help {
-        display: block;
+    .container {
+        margin-top: 85px;
     }
 
     .card {
-
-        width:
-            calc(100% - 30px);
-
-        max-width:
-            400px;
-
-        padding:
-            32px 22px 27px;
-
-        border-radius:
-            22px;
+        padding: 35px 20px;
+        margin-top: 55px;
+        border-radius: 25px;
     }
 
-
-    .icon {
-
-        width: 58px;
-        height: 58px;
-
-        margin-bottom:
-            17px;
-
-        font-size:
-            25px;
-    }
-
-
-    h1 {
-        font-size:
-            27px;
-    }
-
-
-    .description {
-        font-size:
-            13px;
-    }
-
-
-    .users {
-        margin-bottom:
-            23px;
-    }
-
-
-    .bot-button {
-
-        height:
-            55px;
-
-        font-size:
-            14px;
-    }
-
-
-    .ghost {
-
-        filter:
-            drop-shadow(
-                0 0 5px
-                rgba(0, 120, 255, .9)
-            )
-
-            drop-shadow(
-                0 0 13px
-                rgba(0, 110, 255, .55)
-            );
+    .warning {
+        font-size: 13px;
     }
 }
-
-
-/* =========================
-   МАЛЕНЬКИЙ ЭКРАН
-========================= */
-
-@media (max-width: 380px) {
-
-    .help {
-
-        width:
-            210px;
-
-        font-size:
-            11px;
-    }
-
-
-    .help-title {
-        font-size:
-            13px;
-    }
-
-
-    .card {
-
-        padding:
-            28px 18px 24px;
-    }
-
-
-    h1 {
-        font-size:
-            25px;
-    }
-
-
-    .bot-button {
-        font-size:
-            13px;
-    }
-}
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================
-     ФОНОВЫЕ ПРИЗРАКИ
-========================= -->
-
-<div
-    class="ghosts"
-    id="ghosts">
+<div class="top">
+    <div class="lang">
+        <button id="ru" class="active" onclick="setLang('ru')">RU</button>
+        <button id="en" onclick="setLang('en')">EN</button>
+    </div>
 </div>
 
+<main class="container">
 
-<!-- СИНЕЕ СВЕЧЕНИЕ -->
+    <div class="logo">ZERO TRACE</div>
 
-<div class="bg-glow"></div>
+    <h1 id="heading">Переходник</h1>
+    <p class="subtitle" id="subtitle">
+        Выберите нужное направление
+    </p>
 
+    <!-- ГЛАВНОЕ МЕНЮ -->
+    <section class="card" id="menu">
 
-<!-- =========================
-     ПОДСКАЗКА НА ТЕЛЕФОНЕ
-========================= -->
+        <div class="symbol">⌁</div>
 
-<div class="help">
+        <h2 id="menuTitle">Выберите бота</h2>
 
-    <div class="arrow"></div>
+        <p class="description" id="menuDesc">
+            Выберите одну из доступных ссылок
+        </p>
 
-    <div class="help-title">
-        ⚠️ Не открывается?
-    </div>
-
-    <div class="help-text">
-        Нажми на <b>•••</b> в правом верхнем углу
-        и выбери
-        <b>«Открыть в браузере»</b>.
-    </div>
-
-</div>
-
-
-<!-- =========================
-     ГЛАВНАЯ КАРТОЧКА
-========================= -->
-
-<div class="card">
-
-    <div class="icon">
-        ❄️
-    </div>
-
-
-    <h1>
-        Zero-Trace
-    </h1>
-
-
-    <div class="description">
-        Выбери нужный раздел ниже
-    </div>
-
-
-    <div class="users">
-        🌀 1000+ активных пользователей
-    </div>
-
-
-    <div class="buttons">
-
-
-        <button
-            class="bot-button"
-            onclick="openBot1()"
-        >
-            🔹 бот для сноса ❄️
+        <button class="main-btn" onclick="showBot('snos')"
+                id="snosBtn">
+            Перейти в бота для сноса
         </button>
 
-
-        <button
-            class="bot-button"
-            onclick="openBot2()"
-        >
-            🔹 бот для пробива 🔍
+        <button class="main-btn secondary"
+                onclick="showBot('probiv')" id="probivBtn">
+            Перейти в бота для пробива
         </button>
 
+    </section>
 
-    </div>
+    <!-- КАРТОЧКА ССЫЛКИ -->
+    <section class="card result" id="result">
 
+        <div class="symbol">↗</div>
 
-    <div class="footer-text">
-        🔵 Быстрый переход через Telegram
-    </div>
+        <h2 id="resultTitle">Ваша ссылка</h2>
 
+        <p class="description" id="resultDesc">
+            Нажмите кнопку ниже для перехода
+        </p>
+
+        <div class="link" id="linkText"></div>
+
+        <button class="main-btn" id="telegramBtn"
+                onclick="openTelegram()">
+            Перейти в Telegram
+        </button>
+
+        <button class="main-btn secondary"
+                onclick="copyLink()" id="copyBtn">
+            Скопировать ссылку
+        </button>
+
+        <button class="back" onclick="goBack()" id="backBtn">
+            ← Назад
+        </button>
+
+    </section>
+
+</main>
+
+<!-- ПРЕДУПРЕЖДЕНИЕ -->
+<div class="warning">
+    <strong id="warningTitle">⚠️ Внимание!</strong>
+    <span id="warningText">
+        Если ссылка не открывается, нажмите на 3 полоски
+        вверху экрана и выберите «Открыть в браузере».
+    </span>
 </div>
 
-
+<footer>ZERO TRACE © 2026</footer>
 
 <script>
 
-/* =========================
-   ССЫЛКИ
-========================= */
-
-const BOT_LINK_1 =
-    "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g";
-
-const BOT_LINK_2 =
-    "https://t.me/FaidikS_bot?start=cH7Uft92";
-
-
-/* =========================
-   ОТКРЫТИЕ ССЫЛОК
-========================= */
-
-function openBot1() {
-
-    window.location.href =
-        BOT_LINK_1;
-}
-
-
-function openBot2() {
-
-    window.location.href =
-        BOT_LINK_2;
-}
-
-
-/* ==================================================
-   ВАЖНО:
-   ЗДЕСЬ УКАЗАНО ТОЧНОЕ НАЗВАНИЕ НОВОГО PNG
-================================================== */
-
-const ghostImage =
-    "Без названия18_20260909224116.png";
-
-
-/* Контейнер */
-
-const ghostContainer =
-    document.getElementById("ghosts");
-
-
-/* =========================
-   СОЗДАНИЕ ПРИЗРАКА
-========================= */
-
-function createGhost() {
-
-    const ghost =
-        document.createElement("img");
-
-
-    ghost.className =
-        "ghost";
-
-
-    /*
-       Используем новую картинку
-       из твоего репозитория.
-    */
-
-    ghost.src =
-        ghostImage;
-
-
-    /* Размер */
-
-    const size =
-        Math.floor(
-            Math.random() * 61
-        ) + 60;
-
-
-    /* Прозрачность */
-
-    const opacity =
-        (
-            Math.random() * .15
-            + .18
-        ).toFixed(2);
-
-
-    /* Скорость движения */
-
-    const duration =
-        Math.floor(
-            Math.random() * 8
-        ) + 15;
-
-
-    /* Скорость появления */
-
-    const fade =
-        Math.floor(
-            Math.random() * 5
-        ) + 8;
-
-
-    /* Случайная задержка */
-
-    const delay =
-        -Math.floor(
-            Math.random() * 18
-        );
-
-
-    /* Положение */
-
-    const x =
-        Math.random() * 100;
-
-
-    const y =
-        Math.random() * 100;
-
-
-    /* CSS-переменные */
-
-    ghost.style.setProperty(
-        "--size",
-        size + "px"
-    );
-
-
-    ghost.style.setProperty(
-        "--opacity",
-        opacity
-    );
-
-
-    ghost.style.setProperty(
-        "--duration",
-        duration + "s"
-    );
-
-
-    ghost.style.setProperty(
-        "--fade",
-        fade + "s"
-    );
-
-
-    ghost.style.setProperty(
-        "--delay",
-        delay + "s"
-    );
-
-
-    ghost.style.left =
-        x + "%";
-
-
-    ghost.style.top =
-        y + "%";
-
-
-    /* Добавляем на страницу */
-
-    ghostContainer.appendChild(
-        ghost
-    );
-}
-
-
-/* =========================
-   КОЛИЧЕСТВО ПРИЗРАКОВ
-========================= */
-
-const ghostCount =
-    window.innerWidth < 700
-        ? 14
-        : 22;
-
-
-for (
-    let i = 0;
-    i < ghostCount;
-    i++
-) {
-
-    createGhost();
-}
-
-
-/* =========================
-   ВОССТАНОВЛЕНИЕ СТРАНИЦЫ
-========================= */
-
-function restorePage() {
-
-    document.documentElement.style.background =
-        "#000";
-
-
-    document.body.style.background =
-        "radial-gradient(circle at 50% 45%, #000d1c 0%, #000409 40%, #000000 82%)";
-
-
-    document.body.style.opacity =
-        "1";
-}
-
-
-/* =========================
-   СОБЫТИЯ
-========================= */
-
-window.addEventListener(
-    "pageshow",
-    restorePage
-);
-
-
-window.addEventListener(
-    "focus",
-    restorePage
-);
-
-
-document.addEventListener(
-    "visibilitychange",
-    function () {
-
-        if (!document.hidden) {
-
-            restorePage();
-        }
+// ====================================
+// ССЫЛКИ НА БОТОВ
+// ====================================
+
+const bots = {
+    snos: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
+
+    probiv: "https://t.me/FaidikS_bot?start=cH7Uft92"
+};
+
+let selectedBot = "";
+
+// ====================================
+// ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА
+// ====================================
+
+let language = "ru";
+
+const translations = {
+    ru: {
+        heading: "Переходник",
+        subtitle: "Выберите нужное направление",
+        menuTitle: "Выберите бота",
+        menuDesc: "Выберите одну из доступных ссылок",
+        snos: "Перейти в бота для сноса",
+        probiv: "Перейти в бота для пробива",
+        resultTitle: "Ваша ссылка",
+        resultDesc: "Нажмите кнопку ниже для перехода",
+        telegram: "Перейти в Telegram",
+        copy: "Скопировать ссылку",
+        copied: "Ссылка скопирована!",
+        back: "← Назад",
+        warningTitle: "⚠️ Внимание! ",
+        warningText: "Если ссылка не открывается, нажмите на 3 полоски вверху экрана и выберите «Открыть в браузере»."
+    },
+
+    en: {
+        heading: "Redirect",
+        subtitle: "Choose your destination",
+        menuTitle: "Choose a bot",
+        menuDesc: "Select one of the available links",
+        snos: "Open bot for takedown",
+        probiv: "Open bot for lookup",
+        resultTitle: "Your link",
+        resultDesc: "Press the button below to continue",
+        telegram: "Open in Telegram",
+        copy: "Copy link",
+        copied: "Link copied!",
+        back: "← Back",
+        warningTitle: "⚠️ Attention! ",
+        warningText: "If the link doesn't open, tap the three lines at the top and select 'Open in Browser'."
     }
-);
+};
+
+function setLang(lang) {
+    language = lang;
+
+    const t = translations[lang];
+
+    document.documentElement.lang = lang;
+
+    document.getElementById("ru").classList.toggle(
+        "active", lang === "ru"
+    );
+
+    document.getElementById("en").classList.toggle(
+        "active", lang === "en"
+    );
+
+    document.getElementById("heading").textContent = t.heading;
+    document.getElementById("subtitle").textContent = t.subtitle;
+    document.getElementById("menuTitle").textContent = t.menuTitle;
+    document.getElementById("menuDesc").textContent = t.menuDesc;
+    document.getElementById("snosBtn").textContent = t.snos;
+    document.getElementById("probivBtn").textContent = t.probiv;
+    document.getElementById("resultTitle").textContent = t.resultTitle;
+    document.getElementById("resultDesc").textContent = t.resultDesc;
+    document.getElementById("telegramBtn").textContent = t.telegram;
+    document.getElementById("copyBtn").textContent = t.copy;
+    document.getElementById("backBtn").textContent = t.back;
+    document.getElementById("warningTitle").textContent = t.warningTitle;
+    document.getElementById("warningText").textContent = t.warningText;
+}
+
+// ====================================
+// ОТКРЫТИЕ КАРТОЧКИ
+// ====================================
+
+function showBot(type) {
+
+    selectedBot = bots[type];
+
+    document.getElementById("menu").style.display = "none";
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("linkText").textContent = selectedBot;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+// ====================================
+// ПЕРЕХОД В TELEGRAM
+// ====================================
+
+function openTelegram() {
+
+    if (!selectedBot) return;
+
+    window.open(selectedBot, "_blank", "noopener,noreferrer");
+}
+
+// ====================================
+// КОПИРОВАНИЕ ССЫЛКИ
+// ====================================
+
+async function copyLink() {
+
+    if (!selectedBot) return;
+
+    try {
+        await navigator.clipboard.writeText(selectedBot);
+    } catch (error) {
+        const input = document.createElement("textarea");
+        input.value = selectedBot;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+    }
+
+    const btn = document.getElementById("copyBtn");
+
+    btn.textContent = translations[language].copied;
+
+    setTimeout(() => {
+        btn.textContent = translations[language].copy;
+    }, 1800);
+}
+
+// ====================================
+// ВОЗВРАТ В МЕНЮ
+// ====================================
+
+function goBack() {
+
+    document.getElementById("result").style.display = "none";
+
+    document.getElementById("menu").style.display = "block";
+
+    selectedBot = "";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
 </script>
 
