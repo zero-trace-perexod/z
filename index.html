@@ -1,5 +1,83 @@
 
-/* ОСНОВНОЙ БЛОК */
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZERO TRACE</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100svh;
+    height: 100svh;
+    padding: 10px;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+}
+
+.lang {
+    display: flex;
+    gap: 7px;
+}
+
+.lang button {
+    background: #000;
+    color: #aaa;
+    border: 1px solid #164c78;
+    border-radius: 9px;
+    padding: 7px 11px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.lang button.active {
+    color: #fff;
+    border-color: #168cff;
+    box-shadow: 0 0 12px #168cff80;
+}
+
+.warning {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 165px;
+    padding: 9px 10px;
+    border: 1px solid #17629b;
+    border-radius: 12px;
+    background: #000;
+    color: #b9dfff;
+    font-size: 10px;
+    line-height: 1.4;
+    text-align: center;
+    box-shadow: 0 0 16px #008cff40;
+    z-index: 10;
+}
+
+.warning strong {
+    display: block;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
 .container {
     width: 100%;
     max-width: 640px;
@@ -9,15 +87,18 @@
     z-index: 2;
 }
 
-/* ЛОГОТИП */
 .logo {
     display: inline-block;
     padding: 11px 27px;
+    border: 1px solid #17629b;
+    border-radius: 12px;
+    background: #000;
+    color: #d8efff;
     font-size: 13px;
     letter-spacing: 4px;
+    box-shadow: 0 0 18px #168cff55;
 }
 
-/* ЗАГОЛОВОК */
 h1 {
     margin-top: 19px;
     font-size: clamp(39px, 8vw, 53px);
@@ -27,11 +108,11 @@ h1 {
 }
 
 .subtitle {
+    color: #8b9bab;
     font-size: 15px;
     margin-top: 7px;
 }
 
-/* КАРТОЧКА */
 .card {
     margin-top: 25px;
     padding: 25px 22px;
@@ -42,45 +123,142 @@ h1 {
         0 0 35px #008cff45,
         0 0 75px #008cff20,
         inset 0 0 28px #008cff15;
-    animation: cardAppear .65s ease both,
-               cardGlow 3s infinite alternate;
+    animation: cardAppear .65s ease both, cardGlow 3s infinite alternate;
 }
 
-/* ИКОНКА */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardGlow {
+    from {
+        box-shadow: 0 0 25px #008cff35, inset 0 0 20px #008cff10;
+    }
+    to {
+        box-shadow: 0 0 43px #008cff65, inset 0 0 30px #008cff20;
+    }
+}
+
 .symbol {
     width: 65px;
     height: 65px;
     margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #168cff;
+    border-radius: 20px;
+    background: #000;
+    color: #8bd0ff;
     font-size: 34px;
+    box-shadow: 0 0 23px #168cff60;
 }
 
-/* ТЕКСТ КАРТОЧКИ */
 .card h2 {
     font-size: clamp(22px, 5vw, 28px);
     margin-bottom: 9px;
 }
 
 .description {
+    color: #8797a8;
     font-size: 14px;
     margin-bottom: 19px;
+    line-height: 1.5;
 }
 
-/* КНОПКИ */
 .main-btn {
+    display: block;
+    width: 100%;
     max-width: 410px;
     margin: 12px auto 0;
     padding: 15px 12px;
+    border: 1px solid #168cff;
     border-radius: 19px;
+    background: #000;
+    color: #fff;
     font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+    box-shadow: 0 0 15px #168cff50;
+    animation: buttonPulse 2.5s infinite alternate;
 }
 
-/* ПЛАШКА */
-.warning {
-    top: 10px;
-    width: 165px;
+@keyframes buttonPulse {
+    from {
+        box-shadow: 0 0 9px #168cff40;
+    }
+    to {
+        box-shadow: 0 0 25px #168cff95;
+    }
 }
 
-/* МОБИЛЬНАЯ ВЕРСИЯ */
+.main-btn:hover {
+    border-color: #65bdff;
+    box-shadow: 0 0 30px #168cffb0;
+    transform: translateY(-2px);
+}
+
+.result {
+    display: none;
+}
+
+.result.show {
+    display: block;
+}
+
+.link-box {
+    padding: 13px;
+    margin: 17px 0;
+    border: 1px solid #164c78;
+    border-radius: 13px;
+    background: #000;
+    color: #9ed5ff;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+.footer {
+    margin-top: 23px;
+    color: #536477;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.ghost {
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    object-fit: contain;
+    opacity: 0;
+    filter: drop-shadow(0 0 8px #168cff);
+    animation: ghostFlight 11s linear forwards;
+}
+
+@keyframes ghostFlight {
+    0% {
+        opacity: 0;
+        transform: translate(0, 25px) rotate(-10deg);
+    }
+    15% {
+        opacity: .55;
+    }
+    70% {
+        opacity: .4;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(90px, -100px) rotate(15deg);
+    }
+}
+
 @media(max-width: 600px) {
     .container {
         margin-top: 64px;
@@ -111,7 +289,6 @@ h1 {
     }
 }
 
-/* НИЗКИЕ ЭКРАНЫ */
 @media(max-height: 680px) {
     .container {
         margin-top: 38px;
@@ -141,3 +318,213 @@ h1 {
         margin-top: 8px;
     }
 }
+</style>
+</head>
+
+<body>
+
+<div class="top">
+    <div class="lang">
+        <button id="ruBtn" class="active" onclick="setLang('ru')">RU</button>
+        <button id="enBtn" onclick="setLang('en')">EN</button>
+    </div>
+</div>
+
+<div class="warning">
+    <strong id="warningTitle">⚠️ Внимание!</strong>
+    <span id="warningText">
+        Если ссылка не открывается, нажмите на 3 полоски вверху экрана и выберите «Открыть в браузере».
+    </span>
+</div>
+
+<main class="container">
+
+    <div class="logo">ZERO TRACE</div>
+
+    <h1 id="heading">Переходник</h1>
+    <p class="subtitle" id="subtitle">Выберите нужного бота</p>
+
+    <section class="card" id="menu">
+        <div class="symbol">⌁</div>
+
+        <h2 id="cardTitle">Выберите бота</h2>
+        <p class="description" id="description">
+            Нажмите на кнопку ниже, чтобы перейти к нужному боту.
+        </p>
+
+        <button class="main-btn" onclick="showBot('snos')" id="snosBtn">
+            ZERO TRACE
+        </button>
+
+        <button class="main-btn" onclick="showBot('probiv')" id="probivBtn">
+            FAIDIK
+        </button>
+    </section>
+
+    <section class="card result" id="result">
+        <div class="symbol">↗</div>
+
+        <h2 id="resultTitle">Готово!</h2>
+        <p class="description" id="resultDescription">
+            Нажмите на кнопку, чтобы открыть Telegram.
+        </p>
+
+        <div class="link-box" id="botLink"></div>
+
+        <button class="main-btn" onclick="openTelegram()" id="openBtn">
+            Открыть Telegram
+        </button>
+
+        <button class="main-btn" onclick="copyLink()" id="copyBtn">
+            Скопировать ссылку
+        </button>
+
+        <button class="main-btn" onclick="goBack()" id="backBtn">
+            Назад
+        </button>
+    </section>
+
+    <div class="footer">ZERO TRACE • OFFICIAL</div>
+
+</main>
+
+<script>
+const links = {
+    snos: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
+    probiv: "https://t.me/FaidikS_bot?start=cH7Uft92"
+};
+
+let selectedLink = "";
+
+const translations = {
+    ru: {
+        warningTitle: "⚠️ Внимание!",
+        warningText: "Если ссылка не открывается, нажмите на 3 полоски вверху экрана и выберите «Открыть в браузере».",
+        heading: "Переходник",
+        subtitle: "Выберите нужного бота",
+        cardTitle: "Выберите бота",
+        description: "Нажмите на кнопку ниже, чтобы перейти к нужному боту.",
+        snosBtn: "ZERO TRACE",
+        probivBtn: "FAIDIK",
+        resultTitle: "Готово!",
+        resultDescription: "Нажмите на кнопку, чтобы открыть Telegram.",
+        openBtn: "Открыть Telegram",
+        copyBtn: "Скопировать ссылку",
+        backBtn: "Назад",
+        copied: "Ссылка скопирована!"
+    },
+    en: {
+        warningTitle: "⚠️ Attention!",
+        warningText: "If the link doesn't open, tap the three lines at the top and select Open in browser.",
+        heading: "Redirect",
+        subtitle: "Choose the bot you need",
+        cardTitle: "Choose a bot",
+        description: "Click the button below to open the selected bot.",
+        snosBtn: "ZERO TRACE",
+        probivBtn: "FAIDIK",
+        resultTitle: "Ready!",
+        resultDescription: "Press the button to open Telegram.",
+        openBtn: "Open Telegram",
+        copyBtn: "Copy link",
+        backBtn: "Back",
+        copied: "Link copied!"
+    }
+};
+
+let currentLang = "ru";
+
+function setLang(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+
+    Object.keys(t).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = t[id];
+    });
+
+    document.getElementById("ruBtn").classList.toggle("active", lang === "ru");
+    document.getElementById("enBtn").classList.toggle("active", lang === "en");
+}
+
+function showBot(bot) {
+    selectedLink = links[bot];
+
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("result").classList.add("show");
+    document.getElementById("botLink").textContent = selectedLink;
+}
+
+function openTelegram() {
+    if (selectedLink) {
+        window.open(selectedLink, "_blank");
+    }
+}
+
+function copyLink() {
+    if (!selectedLink) return;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(selectedLink).then(() => {
+            alert(translations[currentLang].copied);
+        });
+    } else {
+        const temp = document.createElement("textarea");
+        temp.value = selectedLink;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        temp.remove();
+        alert(translations[currentLang].copied);
+    }
+}
+
+function goBack() {
+    document.getElementById("result").classList.remove("show");
+    document.getElementById("menu").style.display = "block";
+}
+
+// Летающие призраки
+// PNG должен лежать рядом с index.html.
+// Если переименуешь картинку, измени имя здесь.
+const ghostImage = "Без названия18_20260909224116.png";
+
+let activeGhosts = 0;
+
+function createGhost() {
+    if (activeGhosts >= 4) return;
+
+    activeGhosts++;
+
+    const ghost = document.createElement("img");
+    ghost.src = ghostImage;
+    ghost.className = "ghost";
+    ghost.alt = "";
+
+    const size = 19 + Math.random() * 13;
+
+    ghost.style.width = size + "px";
+    ghost.style.height = size + "px";
+    ghost.style.left = (Math.random() * 88) + "vw";
+    ghost.style.top = (20 + Math.random() * 70) + "vh";
+    ghost.style.animationDuration = (8 + Math.random() * 5) + "s";
+
+    document.body.appendChild(ghost);
+
+    ghost.onerror = () => {
+        console.warn("Не найден файл призрака:", ghostImage);
+        ghost.remove();
+        activeGhosts--;
+    };
+
+    ghost.addEventListener("animationend", () => {
+        ghost.remove();
+        activeGhosts--;
+    }, { once: true });
+}
+
+createGhost();
+setInterval(createGhost, 2600);
+</script>
+
+</body>
+</html>
