@@ -21,14 +21,11 @@ body {
     background: #000;
     color: #fff;
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
     position: relative;
 }
 
 .top {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     position: relative;
     z-index: 5;
@@ -119,31 +116,20 @@ h1 {
     border: 1px solid #17629b;
     border-radius: 29px;
     background: #000;
-    box-shadow:
-        0 0 35px #008cff45,
-        0 0 75px #008cff20,
-        inset 0 0 28px #008cff15;
+    box-shadow: 0 0 35px #008cff45,
+                0 0 75px #008cff20,
+                inset 0 0 28px #008cff15;
     animation: cardAppear .65s ease both, cardGlow 3s infinite alternate;
 }
 
 @keyframes cardAppear {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes cardGlow {
-    from {
-        box-shadow: 0 0 25px #008cff35, inset 0 0 20px #008cff10;
-    }
-    to {
-        box-shadow: 0 0 43px #008cff65, inset 0 0 30px #008cff20;
-    }
+    from { box-shadow: 0 0 25px #008cff35, inset 0 0 20px #008cff10; }
+    to { box-shadow: 0 0 43px #008cff65, inset 0 0 30px #008cff20; }
 }
 
 .symbol {
@@ -192,12 +178,8 @@ h1 {
 }
 
 @keyframes buttonPulse {
-    from {
-        box-shadow: 0 0 9px #168cff40;
-    }
-    to {
-        box-shadow: 0 0 25px #168cff95;
-    }
+    from { box-shadow: 0 0 9px #168cff40; }
+    to { box-shadow: 0 0 25px #168cff95; }
 }
 
 .main-btn:hover {
@@ -232,30 +214,38 @@ h1 {
     letter-spacing: 2px;
 }
 
+/* Большие летающие призраки */
 .ghost {
     position: fixed;
     z-index: 1;
     pointer-events: none;
     object-fit: contain;
     opacity: 0;
-    filter: drop-shadow(0 0 8px #168cff);
-    animation: ghostFlight 11s linear forwards;
+    filter: drop-shadow(0 0 12px #168cff)
+            drop-shadow(0 0 22px #168cff80);
+    animation: ghostFlight 9s ease-in-out forwards;
 }
 
 @keyframes ghostFlight {
     0% {
         opacity: 0;
-        transform: translate(0, 25px) rotate(-10deg);
+        transform: translate(0, 25px) scale(.65) rotate(-12deg);
     }
     15% {
-        opacity: .55;
+        opacity: .75;
+        transform: translate(15px, 0) scale(1) rotate(-5deg);
     }
-    70% {
-        opacity: .4;
+    45% {
+        opacity: .8;
+        transform: translate(45px, -35px) scale(1.08) rotate(7deg);
+    }
+    75% {
+        opacity: .55;
+        transform: translate(70px, -65px) scale(.95) rotate(12deg);
     }
     100% {
         opacity: 0;
-        transform: translate(90px, -100px) rotate(15deg);
+        transform: translate(110px, -110px) scale(.7) rotate(18deg);
     }
 }
 
@@ -290,33 +280,16 @@ h1 {
 }
 
 @media(max-height: 680px) {
-    .container {
-        margin-top: 38px;
-    }
-
-    .card {
-        margin-top: 16px;
-        padding: 17px;
-    }
-
+    .container { margin-top: 38px; }
+    .card { margin-top: 16px; padding: 17px; }
     .symbol {
         width: 50px;
         height: 50px;
         margin-bottom: 9px;
     }
-
-    h1 {
-        margin-top: 12px;
-    }
-
-    .description {
-        margin-bottom: 10px;
-    }
-
-    .main-btn {
-        padding: 12px;
-        margin-top: 8px;
-    }
+    h1 { margin-top: 12px; }
+    .description { margin-bottom: 10px; }
+    .main-btn { padding: 12px; margin-top: 8px; }
 }
 </style>
 </head>
@@ -353,11 +326,11 @@ h1 {
         </p>
 
         <button class="main-btn" onclick="showBot('snos')" id="snosBtn">
-            ZERO TRACE
+            Бот для сноса
         </button>
 
         <button class="main-btn" onclick="showBot('probiv')" id="probivBtn">
-            FAIDIK
+            Бот для пробива
         </button>
     </section>
 
@@ -404,8 +377,8 @@ const translations = {
         subtitle: "Выберите нужного бота",
         cardTitle: "Выберите бота",
         description: "Нажмите на кнопку ниже, чтобы перейти к нужному боту.",
-        snosBtn: "ZERO TRACE",
-        probivBtn: "FAIDIK",
+        snosBtn: "Бот для сноса",
+        probivBtn: "Бот для пробива",
         resultTitle: "Готово!",
         resultDescription: "Нажмите на кнопку, чтобы открыть Telegram.",
         openBtn: "Открыть Telegram",
@@ -420,8 +393,8 @@ const translations = {
         subtitle: "Choose the bot you need",
         cardTitle: "Choose a bot",
         description: "Click the button below to open the selected bot.",
-        snosBtn: "ZERO TRACE",
-        probivBtn: "FAIDIK",
+        snosBtn: "Removal bot",
+        probivBtn: "Lookup bot",
         resultTitle: "Ready!",
         resultDescription: "Press the button to open Telegram.",
         openBtn: "Open Telegram",
@@ -483,15 +456,13 @@ function goBack() {
     document.getElementById("menu").style.display = "block";
 }
 
-// Летающие призраки
-// PNG должен лежать рядом с index.html.
-// Если переименуешь картинку, измени имя здесь.
+// Призраки: PNG лежит рядом с index.html
 const ghostImage = "Без названия18_20260909224116.png";
 
 let activeGhosts = 0;
 
 function createGhost() {
-    if (activeGhosts >= 4) return;
+    if (activeGhosts >= 7) return;
 
     activeGhosts++;
 
@@ -500,18 +471,17 @@ function createGhost() {
     ghost.className = "ghost";
     ghost.alt = "";
 
-    const size = 19 + Math.random() * 13;
+    const size = 35 + Math.random() * 30;
 
     ghost.style.width = size + "px";
     ghost.style.height = size + "px";
-    ghost.style.left = (Math.random() * 88) + "vw";
-    ghost.style.top = (20 + Math.random() * 70) + "vh";
+    ghost.style.left = (Math.random() * 85) + "vw";
+    ghost.style.top = (15 + Math.random() * 75) + "vh";
     ghost.style.animationDuration = (8 + Math.random() * 5) + "s";
 
     document.body.appendChild(ghost);
 
     ghost.onerror = () => {
-        console.warn("Не найден файл призрака:", ghostImage);
         ghost.remove();
         activeGhosts--;
     };
@@ -522,8 +492,9 @@ function createGhost() {
     }, { once: true });
 }
 
+// Призраки появляются с небольшими интервалами
 createGhost();
-setInterval(createGhost, 2600);
+setInterval(createGhost, 1500);
 </script>
 
 </body>
