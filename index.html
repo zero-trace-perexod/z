@@ -22,50 +22,57 @@
 
 body {
     min-height: 100svh;
-    padding: 14px;
+    height: 100svh;
+    padding: 10px;
     color: var(--white);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: #000;
-    overflow-x: hidden;
+    overflow: hidden;
     position: relative;
 }
 
-/* ФОНОВОЕ СВЕЧЕНИЕ */
+/* ГОЛУБОЕ ФОНОВОЕ СВЕЧЕНИЕ */
 
 body::before,
 body::after {
     content: "";
     position: fixed;
-    width: 260px;
-    height: 260px;
+    width: 340px;
+    height: 340px;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(110px);
     pointer-events: none;
     z-index: 0;
-    animation: ambient 8s ease-in-out infinite alternate;
+    animation: ambient 6s ease-in-out infinite alternate;
 }
 
 body::before {
     background: #006eff;
-    top: 20%;
-    left: 30%;
-    opacity: .10;
+    top: 15%;
+    left: 20%;
+    opacity: .18;
 }
 
 body::after {
     background: #00bfff;
-    bottom: 5%;
+    bottom: 0;
     right: 0;
-    opacity: .07;
+    opacity: .13;
     animation-delay: -3s;
 }
 
 @keyframes ambient {
-    from { transform: scale(.8); opacity: .04; }
-    to { transform: scale(1.25); opacity: .13; }
+    from {
+        transform: scale(.8);
+        opacity: .10;
+    }
+    to {
+        transform: scale(1.3);
+        opacity: .24;
+    }
 }
 
-/* ЯЗЫКИ */
+/* ВЕРХНЯЯ ПАНЕЛЬ */
 
 .top {
     width: 100%;
@@ -79,45 +86,44 @@ body::after {
 
 .lang {
     display: flex;
-    padding: 4px;
+    padding: 3px;
     border: 1px solid #263c55;
-    background: #050505;
+    background: #000;
     border-radius: 50px;
-    box-shadow: 0 0 20px #008cff30;
+    box-shadow: 0 0 17px #008cff50;
 }
 
 .lang button {
     border: none;
     background: transparent;
     color: #8998ab;
-    padding: 8px 16px;
+    padding: 7px 13px;
     border-radius: 40px;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
-    transition: .3s;
 }
 
 .lang button.active {
     background: #101010;
     color: white;
-    box-shadow: 0 0 15px #008cff65;
+    box-shadow: 0 0 16px #008cff80;
 }
 
-/* ПЛАШКА — ВВЕРХУ СПРАВА */
+/* ПЛАШКА */
 
 .warning {
     position: absolute;
-    top: 12px;
-    right: max(12px, calc((100vw - 680px) / 2));
-    width: 175px;
-    padding: 10px 12px;
+    top: 10px;
+    right: max(10px, calc((100vw - 680px) / 2));
+    width: 165px;
+    padding: 8px 10px;
     border: 1px solid #287eb8;
-    border-radius: 15px;
+    border-radius: 14px;
     background: #050505;
     color: #c9eaff;
-    font-size: 11px;
-    line-height: 1.4;
-    box-shadow: 0 0 17px #008cff40;
+    font-size: 10px;
+    line-height: 1.35;
+    box-shadow: 0 0 22px #008cff50;
     animation: warningGlow 3s infinite alternate;
     z-index: 10;
 }
@@ -130,25 +136,25 @@ body::after {
 
 .warning-arrow {
     position: absolute;
-    top: -14px;
-    right: 12px;
+    top: -13px;
+    right: 10px;
     color: #38bdff;
-    font-size: 21px;
+    font-size: 20px;
     transform: rotate(-35deg);
     text-shadow: 0 0 12px #008cff;
 }
 
 @keyframes warningGlow {
-    from { box-shadow: 0 0 10px #008cff20; }
-    to { box-shadow: 0 0 25px #008cff65; }
+    from { box-shadow: 0 0 12px #008cff30; }
+    to { box-shadow: 0 0 28px #008cff90; }
 }
 
 /* ОСНОВНОЙ БЛОК */
 
 .container {
     width: 100%;
-    max-width: 680px;
-    margin: 65px auto 0;
+    max-width: 600px;
+    margin: 43px auto 0;
     text-align: center;
     position: relative;
     z-index: 2;
@@ -158,56 +164,75 @@ body::after {
 
 .logo {
     display: inline-block;
-    padding: 12px 27px;
+    padding: 9px 23px;
     border: 1px solid #087acb;
     border-radius: 50px;
     background: #000;
     color: #42caff;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 850;
     letter-spacing: 4px;
-    box-shadow: 0 0 20px #008cff35;
-    animation: logoGlow 3s ease-in-out infinite alternate;
+    box-shadow: 0 0 24px #008cff60;
+    animation: logoGlow 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes logoGlow {
-    from { box-shadow: 0 0 10px #008cff25; }
-    to { box-shadow: 0 0 30px #008cff80; }
+    from {
+        box-shadow: 0 0 12px #008cff35;
+        text-shadow: 0 0 5px #008cff;
+    }
+    to {
+        box-shadow: 0 0 32px #008cff95;
+        text-shadow: 0 0 15px #00bfff;
+    }
 }
 
 h1 {
-    margin-top: 24px;
-    font-size: clamp(39px, 8vw, 56px);
+    margin-top: 15px;
+    font-size: clamp(34px, 7vw, 48px);
     font-weight: 850;
     letter-spacing: -2px;
-    text-shadow: 0 0 30px #168cff50;
+    text-shadow: 0 0 32px #168cff85;
+    animation: headingAppear .8s ease both;
+}
+
+@keyframes headingAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .subtitle {
-    color: #9caabd;
-    font-size: 16px;
-    margin-top: 9px;
+    color: #a9b9ca;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
-/* КАРТОЧКИ — ЧЁРНЫЙ ФОН БЕЗ ПОЛОС */
+/* КАРТОЧКИ */
 
 .card {
-    margin-top: 35px;
-    padding: 29px 24px;
-    border: 1px solid #24415e;
-    border-radius: 34px;
+    margin-top: 19px;
+    padding: 20px 19px;
+    border: 1px solid #17629b;
+    border-radius: 27px;
     background: #000;
     box-shadow:
-        0 0 30px #008cff20,
-        inset 0 0 25px #008cff08;
+        0 0 30px #008cff35,
+        0 0 65px #008cff15,
+        inset 0 0 25px #008cff12;
     animation: cardAppear .65s ease both,
-               cardGlow 4s infinite alternate;
+               cardGlow 3s infinite alternate;
 }
 
 @keyframes cardAppear {
     from {
         opacity: 0;
-        transform: translateY(18px) scale(.97);
+        transform: translateY(15px) scale(.97);
     }
     to {
         opacity: 1;
@@ -217,98 +242,94 @@ h1 {
 
 @keyframes cardGlow {
     from {
-        box-shadow: 0 0 20px #008cff15, inset 0 0 15px #168cff05;
+        box-shadow: 0 0 20px #008cff25, inset 0 0 15px #168cff08;
     }
     to {
-        box-shadow: 0 0 40px #008cff35, inset 0 0 25px #168cff10;
+        box-shadow: 0 0 45px #008cff65, inset 0 0 25px #168cff15;
     }
 }
 
 /* ИКОНКИ */
 
 .symbol {
-    width: 75px;
-    height: 75px;
-    margin: 0 auto 19px;
+    width: 57px;
+    height: 57px;
+    margin: 0 auto 12px;
     display: grid;
     place-items: center;
     border: 1px solid #087bc5;
-    border-radius: 25px;
+    border-radius: 19px;
     background: #000;
     color: #36caff;
-    font-size: 37px;
-    box-shadow: 0 0 28px #008cff40;
+    font-size: 30px;
+    box-shadow: 0 0 28px #008cff70;
     animation: iconFloat 3s ease-in-out infinite;
 }
 
 @keyframes iconFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(4deg); }
 }
 
 .card h2 {
-    font-size: clamp(21px, 5vw, 29px);
-    margin-bottom: 9px;
+    font-size: clamp(20px, 5vw, 26px);
+    margin-bottom: 7px;
 }
 
 .description {
     color: #9ba8b8;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 24px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 15px;
 }
 
-/* КНОПКИ — ЧЁРНЫЕ С ПУЛЬСАЦИЕЙ */
+/* КНОПКИ */
 
 .main-btn {
     display: block;
     width: 100%;
-    max-width: 420px;
-    margin: 14px auto 0;
-    padding: 15px 13px;
-    border-radius: 20px;
+    max-width: 390px;
+    margin: 10px auto 0;
+    padding: 13px 10px;
+    border-radius: 17px;
     border: 1px solid #168cff;
     background: #000;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 750;
     cursor: pointer;
-    box-shadow: 0 0 13px #008cff45;
-    animation: buttonPulse 2.2s ease-in-out infinite;
+    box-shadow: 0 0 18px #008cff50;
+    animation: buttonPulse 2s ease-in-out infinite;
     transition: transform .25s, border-color .25s;
 }
 
 @keyframes buttonPulse {
     0%, 100% {
         box-shadow:
-            0 0 8px #008cff35,
-            0 0 17px #008cff20,
-            inset 0 0 8px #008cff08;
+            0 0 10px #008cff45,
+            0 0 22px #008cff25;
         border-color: #126fc0;
     }
-
     50% {
         box-shadow:
-            0 0 18px #00bfff90,
-            0 0 38px #008cff65,
-            inset 0 0 13px #008cff18;
-        border-color: #36caff;
+            0 0 23px #00bfffaa,
+            0 0 48px #008cff85;
+        border-color: #50d3ff;
     }
 }
 
 .main-btn:hover {
     transform: scale(1.025);
-    border-color: #65d5ff;
 }
 
 .main-btn:active {
-    transform: scale(.97);
+    transform: scale(.96);
 }
 
 .secondary {
     background: #000;
-    border: 1px solid #32618a;
-    animation-delay: .5s;
+    border-color: #32618a;
+    animation-delay: .4s;
 }
 
 /* ССЫЛКА */
@@ -320,13 +341,14 @@ h1 {
 .link {
     word-break: break-all;
     color: #56c9ff;
-    font-size: 13px;
-    line-height: 1.6;
-    margin: 12px 0 20px;
-    padding: 13px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 10px 0 15px;
+    padding: 11px;
     background: #000;
     border: 1px solid #204c70;
-    border-radius: 17px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #008cff25;
 }
 
 /* НАЗАД */
@@ -335,16 +357,10 @@ h1 {
     background: transparent;
     color: #9ab5ce;
     border: none;
-    padding: 12px;
-    margin-top: 9px;
-    font-size: 14px;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 13px;
     cursor: pointer;
-    transition: .3s;
-}
-
-.back:hover {
-    color: #42caff;
-    text-shadow: 0 0 12px #008cff;
 }
 
 /* ФУТЕР */
@@ -352,89 +368,132 @@ h1 {
 footer {
     text-align: center;
     color: #52657b;
-    font-size: 11px;
-    margin-top: 20px;
-    padding-bottom: 8px;
+    font-size: 10px;
+    margin-top: 13px;
 }
 
-/* ПРИЗРАКИ */
+/* ЛЕТАЮЩИЕ ПРИЗРАКИ */
 
 .ghost {
     position: fixed;
-    width: 23px;
-    height: 23px;
+    display: block;
     object-fit: contain;
     opacity: 0;
     pointer-events: none;
     z-index: 1;
-    filter: drop-shadow(0 0 7px #159dff);
-    animation: ghostFlight 14s linear forwards;
+    filter:
+        drop-shadow(0 0 5px #159dff)
+        drop-shadow(0 0 12px #008cff);
+    animation: ghostFlight 9s ease-in-out forwards;
     will-change: transform, opacity;
 }
 
 @keyframes ghostFlight {
     0% {
         opacity: 0;
-        transform: translate(0, 0) scale(.65) rotate(-8deg);
+        transform: translate(0, 0) scale(.55) rotate(-10deg);
     }
-
-    12% {
-        opacity: .42;
+    15% {
+        opacity: .75;
     }
-
-    40% {
-        opacity: .35;
-        transform: translate(35px, -45px) scale(.85) rotate(5deg);
+    35% {
+        opacity: .65;
+        transform: translate(35px, -35px) scale(.85) rotate(8deg);
     }
-
-    75% {
-        opacity: .22;
-        transform: translate(75px, -90px) scale(1) rotate(-5deg);
+    65% {
+        opacity: .55;
+        transform: translate(80px, -75px) scale(1.05) rotate(-8deg);
     }
-
+    85% {
+        opacity: .3;
+    }
     100% {
         opacity: 0;
-        transform: translate(105px, -125px) scale(.7) rotate(8deg);
+        transform: translate(125px, -125px) scale(.7) rotate(12deg);
     }
 }
 
-/* МОБИЛЬНАЯ ВЕРСИЯ */
+/* ТЕЛЕФОНЫ */
 
 @media(max-width: 600px) {
     body {
-        padding: 12px;
+        padding: 9px;
     }
 
     .warning {
-        top: 12px;
-        right: 12px;
-        width: 145px;
-        padding: 8px 9px;
+        top: 9px;
+        right: 9px;
+        width: 143px;
+        padding: 7px 8px;
         font-size: 9px;
-        border-radius: 14px;
-    }
-
-    .warning-arrow {
-        right: 10px;
     }
 
     .container {
-        margin-top: 85px;
+        margin-top: 51px;
     }
 
     .card {
-        margin-top: 29px;
-        padding: 25px 17px;
-        border-radius: 29px;
+        margin-top: 17px;
+        padding: 18px 14px;
+        border-radius: 24px;
     }
 
     .main-btn {
-        padding: 14px 10px;
-        font-size: 14px;
+        padding: 12px 9px;
+        font-size: 13px;
+        margin-top: 9px;
     }
 
-    .subtitle {
-        font-size: 15px;
+    .symbol {
+        width: 51px;
+        height: 51px;
+        font-size: 27px;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        margin-bottom: 12px;
+    }
+
+    footer {
+        margin-top: 10px;
+    }
+}
+
+/* НИЗКИЕ ЭКРАНЫ */
+
+@media(max-height: 680px) {
+    .container {
+        margin-top: 30px;
+    }
+
+    .card {
+        margin-top: 12px;
+        padding: 13px;
+    }
+
+    .symbol {
+        width: 43px;
+        height: 43px;
+        font-size: 24px;
+        margin-bottom: 7px;
+    }
+
+    h1 {
+        margin-top: 10px;
+    }
+
+    .description {
+        margin-bottom: 8px;
+    }
+
+    .main-btn {
+        padding: 10px;
+        margin-top: 7px;
+    }
+
+    footer {
+        margin-top: 7px;
     }
 }
 
@@ -449,7 +508,6 @@ footer {
 
 <body>
 
-<!-- ЯЗЫКИ -->
 <div class="top">
     <div class="lang">
         <button id="ru" class="active" onclick="setLang('ru')">RU</button>
@@ -457,13 +515,11 @@ footer {
     </div>
 </div>
 
-<!-- ПЛАШКА -->
 <div class="warning">
     <span class="warning-arrow">↗</span>
     <strong id="warningTitle">⚠️ Внимание!</strong>
     <span id="warningText">
-        Если ссылка не открывается, нажмите на 3 полоски
-        и выберите «Открыть в браузере».
+        Если ссылка не открывается, нажмите на 3 полоски и выберите «Открыть в браузере».
     </span>
 </div>
 
@@ -477,7 +533,6 @@ footer {
         Выберите нужное направление
     </p>
 
-    <!-- ГЛАВНОЕ МЕНЮ -->
     <section class="card" id="menu">
 
         <div class="symbol">⌁</div>
@@ -500,7 +555,6 @@ footer {
 
     </section>
 
-    <!-- КАРТОЧКА ССЫЛКИ -->
     <section class="card result" id="result">
 
         <div class="symbol">↗</div>
@@ -536,7 +590,7 @@ footer {
 
 <script>
 
-// ССЫЛКИ НА БОТОВ
+// ССЫЛКИ
 
 const bots = {
     snos: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
@@ -625,8 +679,6 @@ function showBot(type) {
     result.style.animation = "";
 
     document.getElementById("linkText").textContent = selectedBot;
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ПЕРЕХОД В TELEGRAM
@@ -667,20 +719,18 @@ function goBack() {
     document.getElementById("menu").style.display = "block";
 
     selectedBot = "";
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ==================================
-// ЛЕТАЮЩИЕ ПРИЗРАКИ ИЗ ТВОЕГО PNG
-// ==================================
+// ЛЕТАЮЩИЕ ПРИЗРАКИ
 
 const ghostImage = "Без названия18_20260909224116.png";
 
 let activeGhosts = 0;
 
 function createGhost() {
-    if (activeGhosts >= 3) return;
+
+    // Максимум четыре призрака одновременно
+    if (activeGhosts >= 4) return;
 
     activeGhosts++;
 
@@ -690,18 +740,31 @@ function createGhost() {
     ghost.className = "ghost";
     ghost.alt = "";
 
-    const size = 17 + Math.random() * 11;
+    // Случайный размер
+    const size = 19 + Math.random() * 13;
 
     ghost.style.width = size + "px";
     ghost.style.height = size + "px";
 
-    ghost.style.left = (5 + Math.random() * 85) + "vw";
-    ghost.style.top = (35 + Math.random() * 55) + "vh";
+    // Случайное положение по всему экрану
+    ghost.style.left = (Math.random() * 88) + "vw";
+    ghost.style.top = (20 + Math.random() * 70) + "vh";
 
+    // Случайная продолжительность полёта
     ghost.style.animationDuration =
-        (12 + Math.random() * 5) + "s";
+        (8 + Math.random() * 5) + "s";
+
+    // Небольшой разброс скорости
+    ghost.style.animationDelay = "0s";
 
     document.body.appendChild(ghost);
+
+    // Если PNG не найден — выводим ошибку в консоль
+    ghost.onerror = () => {
+        console.warn("Не найден файл призрака:", ghostImage);
+        ghost.remove();
+        activeGhosts--;
+    };
 
     ghost.addEventListener("animationend", () => {
         ghost.remove();
@@ -709,13 +772,13 @@ function createGhost() {
     }, { once: true });
 }
 
-// РЕДКОЕ ПОЯВЛЕНИЕ ПРИЗРАКОВ
+// ПРИЗРАКИ ПОЯВЛЯЮТСЯ ЧАЩЕ
+
+createGhost();
 
 setInterval(() => {
-    if (Math.random() > 0.35) {
-        createGhost();
-    }
-}, 4500);
+    createGhost();
+}, 2600);
 
 </script>
 
