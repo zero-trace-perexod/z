@@ -256,18 +256,19 @@ h1 {
 
     .card {
         margin-top: 22px;
-        padding: 23px 17px;
+        padding: 20px 15px;
     }
 
     .symbol {
-        width: 61px;
-        height: 61px;
-        font-size: 32px;
+        width: 57px;
+        height: 57px;
+        font-size: 30px;
+        margin-bottom: 11px;
     }
 
     .main-btn {
-        padding: 14px 10px;
-        font-size: 14px;
+        padding: 13px 9px;
+        font-size: 13px;
     }
 
     .warning {
@@ -279,7 +280,7 @@ h1 {
     }
 }
 
-@media(max-height: 680px) {
+@media(max-height: 740px) {
     .container { margin-top: 38px; }
     .card { margin-top: 16px; padding: 17px; }
     .symbol {
@@ -290,6 +291,13 @@ h1 {
     h1 { margin-top: 12px; }
     .description { margin-bottom: 10px; }
     .main-btn { padding: 12px; margin-top: 8px; }
+}
+
+@media(max-width: 380px) {
+    .vpn-btn {
+        font-size: 12px;
+        letter-spacing: -.2px;
+    }
 }
 </style>
 </head>
@@ -318,34 +326,38 @@ h1 {
     <p class="subtitle" id="subtitle">Выберите нужного бота</p>
 
     <section class="card" id="menu">
-        <div class="symbol">🤖</div>
+        <div class="symbol">⌁</div>
 
         <h2 id="cardTitle">Выберите бота</h2>
         <p class="description" id="description">
-            Нажмите на кнопку ниже, чтобы перейти к нужному боту.
+            Нажмите на кнопку ниже, чтобы перейти к нужному сервису.
         </p>
 
         <button class="main-btn" onclick="showBot('snos')" id="snosBtn">
-            Бот для сноса❄️
+            Бот для сноса ❄️
         </button>
 
         <button class="main-btn" onclick="showBot('probiv')" id="probivBtn">
-            Бот для пробива🔍
+            Бот для пробива 🔍
+        </button>
+
+        <button class="main-btn vpn-btn" onclick="showBot('vpn')" id="vpnBtn">
+            Лучший VPN для анонимности 🕵️‍♂️
         </button>
     </section>
 
     <section class="card result" id="result">
-        <div class="symbol">❄️</div>
+        <div class="symbol">↗</div>
 
         <h2 id="resultTitle">Готово!</h2>
         <p class="description" id="resultDescription">
-            Нажмите на кнопку, чтобы открыть Telegram.
+            Нажмите на кнопку, чтобы открыть выбранный сервис.
         </p>
 
         <div class="link-box" id="botLink"></div>
 
         <button class="main-btn" onclick="openTelegram()" id="openBtn">
-            Открыть в Telegram
+            Открыть
         </button>
 
         <button class="main-btn" onclick="copyLink()" id="copyBtn">
@@ -357,14 +369,15 @@ h1 {
         </button>
     </section>
 
-    <div class="footer">БЕЗОПАСНЫЙ ПЕРЕХОД</div>
+    <div class="footer">ZERO TRACE • OFFICIAL</div>
 
 </main>
 
 <script>
 const links = {
     snos: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
-    probiv: "https://t.me/FaidikS_bot?start=cH7Uft92"
+    probiv: "https://t.me/FaidikS_bot?start=cH7Uft92",
+    vpn: "https://t.me/natriavpnbot?start=partner_8123345032"
 };
 
 let selectedLink = "";
@@ -375,13 +388,14 @@ const translations = {
         warningText: "Если ссылка не открывается, нажмите на 3 полоски вверху экрана и выберите «Открыть в браузере».",
         heading: "Переходник",
         subtitle: "Выберите нужного бота",
-        cardTitle: "Выберите бота",
-        description: "Нажмите на кнопку ниже, чтобы перейти к нужному боту.",
-        snosBtn: "Бот для сноса❄️",
-        probivBtn: "Бот для пробива🔍",
+        cardTitle: "Выберите сервис",
+        description: "Нажмите на кнопку ниже, чтобы перейти к нужному сервису.",
+        snosBtn: "Бот для сноса ❄️",
+        probivBtn: "Бот для пробива 🔍",
+        vpnBtn: "Лучший VPN для анонимности 🕵️‍♂️",
         resultTitle: "Готово!",
-        resultDescription: "Нажмите на кнопку, чтобы открыть Telegram.",
-        openBtn: "Открыть в Telegram",
+        resultDescription: "Нажмите на кнопку, чтобы открыть выбранный сервис.",
+        openBtn: "Открыть",
         copyBtn: "Скопировать ссылку",
         backBtn: "Назад",
         copied: "Ссылка скопирована!"
@@ -390,14 +404,15 @@ const translations = {
         warningTitle: "⚠️ Attention!",
         warningText: "If the link doesn't open, tap the three lines at the top and select Open in browser.",
         heading: "Redirect",
-        subtitle: "Choose the bot you need",
-        cardTitle: "Choose a bot",
-        description: "Click the button below to open the selected bot.",
-        snosBtn: "Removal bot",
-        probivBtn: "Lookup bot",
+        subtitle: "Choose a service",
+        cardTitle: "Choose a service",
+        description: "Click a button below to continue.",
+        snosBtn: "Removal bot ❄️",
+        probivBtn: "Lookup bot 🔍",
+        vpnBtn: "Best VPN for privacy 🕵️‍♂️",
         resultTitle: "Ready!",
-        resultDescription: "Press the button to open Telegram.",
-        openBtn: "Open Telegram",
+        resultDescription: "Press the button to open the selected service.",
+        openBtn: "Open",
         copyBtn: "Copy link",
         backBtn: "Back",
         copied: "Link copied!"
@@ -456,7 +471,7 @@ function goBack() {
     document.getElementById("menu").style.display = "block";
 }
 
-// Призраки: PNG лежит рядом с index.html
+// PNG должен лежать рядом с index.html
 const ghostImage = "Без названия18_20260909224116.png";
 
 let activeGhosts = 0;
@@ -492,7 +507,6 @@ function createGhost() {
     }, { once: true });
 }
 
-// Призраки появляются с небольшими интервалами
 createGhost();
 setInterval(createGhost, 1500);
 </script>
