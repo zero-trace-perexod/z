@@ -15,18 +15,15 @@
 
 body {
     min-height: 100svh;
-    height: 100svh;
-    padding: 10px;
-    overflow: hidden;
     background: #000;
     color: #fff;
     font-family: Arial, sans-serif;
+    padding: 10px;
+    overflow-x: hidden;
     position: relative;
 }
 
 .top {
-    display: flex;
-    align-items: center;
     position: relative;
     z-index: 5;
 }
@@ -57,7 +54,7 @@ body {
     top: 10px;
     right: 10px;
     width: 165px;
-    padding: 9px 10px;
+    padding: 9px;
     border: 1px solid #17629b;
     border-radius: 12px;
     background: #000;
@@ -116,9 +113,10 @@ h1 {
     border: 1px solid #17629b;
     border-radius: 29px;
     background: #000;
-    box-shadow: 0 0 35px #008cff45,
-                0 0 75px #008cff20,
-                inset 0 0 28px #008cff15;
+    box-shadow:
+        0 0 35px #008cff45,
+        0 0 75px #008cff20,
+        inset 0 0 28px #008cff15;
     animation: cardAppear .65s ease both, cardGlow 3s infinite alternate;
 }
 
@@ -159,6 +157,18 @@ h1 {
     line-height: 1.5;
 }
 
+.small-hint {
+    color: #8fcfff;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 auto 17px;
+    padding: 10px 12px;
+    border: 1px solid #164c78;
+    border-radius: 12px;
+    background: #000;
+    box-shadow: 0 0 13px #168cff25;
+}
+
 .main-btn {
     display: block;
     width: 100%;
@@ -188,14 +198,6 @@ h1 {
     transform: translateY(-2px);
 }
 
-.result {
-    display: none;
-}
-
-.result.show {
-    display: block;
-}
-
 .link-box {
     padding: 13px;
     margin: 17px 0;
@@ -207,6 +209,14 @@ h1 {
     word-break: break-all;
 }
 
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
 .footer {
     margin-top: 23px;
     color: #536477;
@@ -214,7 +224,6 @@ h1 {
     letter-spacing: 2px;
 }
 
-/* Большие летающие призраки */
 .ghost {
     position: fixed;
     z-index: 1;
@@ -250,27 +259,15 @@ h1 {
 }
 
 @media(max-width: 600px) {
-    .container {
-        margin-top: 64px;
-    }
-
-    .card {
-        margin-top: 22px;
-        padding: 20px 15px;
-    }
-
+    .container { margin-top: 64px; }
+    .card { margin-top: 22px; padding: 20px 15px; }
     .symbol {
         width: 57px;
         height: 57px;
         font-size: 30px;
         margin-bottom: 11px;
     }
-
-    .main-btn {
-        padding: 13px 9px;
-        font-size: 13px;
-    }
-
+    .main-btn { padding: 13px 9px; font-size: 13px; }
     .warning {
         top: 10px;
         right: 9px;
@@ -280,24 +277,8 @@ h1 {
     }
 }
 
-@media(max-height: 740px) {
-    .container { margin-top: 38px; }
-    .card { margin-top: 16px; padding: 17px; }
-    .symbol {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 9px;
-    }
-    h1 { margin-top: 12px; }
-    .description { margin-bottom: 10px; }
-    .main-btn { padding: 12px; margin-top: 8px; }
-}
-
 @media(max-width: 380px) {
-    .vpn-btn {
-        font-size: 12px;
-        letter-spacing: -.2px;
-    }
+    .vpn-btn { font-size: 12px; }
 }
 </style>
 </head>
@@ -321,50 +302,103 @@ h1 {
 <main class="container">
 
     <div class="logo">ZERO TRACE</div>
-
     <h1 id="heading">Переходник</h1>
     <p class="subtitle" id="subtitle">Выберите нужного бота</p>
 
-    <section class="card" id="menu">
-        <div class="symbol">⌁</div>
-
-        <h2 id="cardTitle">Выберите бота</h2>
+    <!-- ГЛАВНОЕ МЕНЮ -->
+    <section class="card page active" id="home">
+        <div class="symbol">👻</div>
+        <h2 id="cardTitle">Выберите сервис</h2>
         <p class="description" id="description">
             Нажмите на кнопку ниже, чтобы перейти к нужному сервису.
         </p>
 
-        <button class="main-btn" onclick="showBot('snos')" id="snosBtn">
+        <button class="main-btn" onclick="showPage('snos')">
             Бот для сноса ❄️
         </button>
 
-        <button class="main-btn" onclick="showBot('probiv')" id="probivBtn">
+        <button class="main-btn" onclick="openSingleBot('probiv')">
             Бот для пробива 🔍
         </button>
 
-        <button class="main-btn vpn-btn" onclick="showBot('vpn')" id="vpnBtn">
+        <button class="main-btn vpn-btn" onclick="openSingleBot('vpn')" id="vpnBtn">
             Лучший VPN для анонимности 🕵️‍♂️
         </button>
     </section>
 
-    <section class="card result" id="result">
-        <div class="symbol">🤖</div>
+    <!-- ВЫБОР БОТА ДЛЯ СНОСА -->
+    <section class="card page" id="snos">
+        <div class="symbol">❄️</div>
+        <h2 id="snosTitle">Бот для сноса</h2>
 
-        <h2 id="resultTitle">Готово!</h2>
-        <p class="description" id="resultDescription">
-            Нажмите на кнопку, чтобы открыть выбранный сервис.
+        <div class="small-hint" id="snosHint">
+            Если бот 1 не работает, попробуйте бот 2.
+        </div>
+
+        <p class="description" id="chooseBotText">
+            Выберите один из вариантов:
         </p>
 
-        <div class="link-box" id="botLink"></div>
-
-        <button class="main-btn" onclick="openTelegram()" id="openBtn">
-            Открыть
+        <button class="main-btn" onclick="showBotDetails('bot1')">
+            Бот 1
         </button>
 
-        <button class="main-btn" onclick="copyLink()" id="copyBtn">
+        <button class="main-btn" onclick="showBotDetails('bot2')">
+            Бот 2
+        </button>
+
+        <button class="main-btn" onclick="showPage('home')" id="backHome">
+            Назад
+        </button>
+    </section>
+
+    <!-- СТРАНИЦА ВЫБРАННОГО БОТА -->
+    <section class="card page" id="botDetails">
+        <div class="symbol">↗</div>
+        <h2 id="detailTitle">Бот 1</h2>
+
+        <div class="small-hint" id="detailHint">
+            Если бот 1 не работает, попробуйте бот 2.
+        </div>
+
+        <p class="description" id="detailDescription">
+            Ссылка на выбранного бота:
+        </p>
+
+        <div class="link-box" id="detailLink"></div>
+
+        <button class="main-btn" onclick="openSelectedBot()" id="detailOpen">
+            Открыть бота
+        </button>
+
+        <button class="main-btn" onclick="copySelectedBot()" id="detailCopy">
             Скопировать ссылку
         </button>
 
-        <button class="main-btn" onclick="goBack()" id="backBtn">
+        <button class="main-btn" onclick="showPage('snos')" id="backBots">
+            К выбору ботов
+        </button>
+    </section>
+
+    <!-- СТРАНИЦА ПРОБИВА И VPN -->
+    <section class="card page" id="singleDetails">
+        <div class="symbol">🤖</div>
+        <h2 id="singleTitle">Готово!</h2>
+        <p class="description" id="singleDescription">
+            Ссылка на выбранный сервис:
+        </p>
+
+        <div class="link-box" id="singleLink"></div>
+
+        <button class="main-btn" onclick="openSelectedBot()" id="singleOpen">
+            Открыть
+        </button>
+
+        <button class="main-btn" onclick="copySelectedBot()" id="singleCopy">
+            Скопировать ссылку
+        </button>
+
+        <button class="main-btn" onclick="showPage('home')" id="singleBack">
             Назад
         </button>
     </section>
@@ -375,12 +409,14 @@ h1 {
 
 <script>
 const links = {
-    snos: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
+    bot1: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
+    bot2: "https://t.me/aoksdaoskasobot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
     probiv: "https://t.me/FaidikS_bot?start=cH7Uft92",
     vpn: "https://t.me/natriavpnbot?start=partner_8123345032"
 };
 
 let selectedLink = "";
+let selectedBot = "";
 
 const translations = {
     ru: {
@@ -390,14 +426,19 @@ const translations = {
         subtitle: "Выберите нужного бота",
         cardTitle: "Выберите сервис",
         description: "Нажмите на кнопку ниже, чтобы перейти к нужному сервису.",
-        snosBtn: "Бот для сноса ❄️",
-        probivBtn: "Бот для пробива 🔍",
         vpnBtn: "Лучший VPN для анонимности 🕵️‍♂️",
-        resultTitle: "Готово!",
-        resultDescription: "Нажмите на кнопку, чтобы открыть выбранный сервис.",
-        openBtn: "Открыть",
-        copyBtn: "Скопировать ссылку",
-        backBtn: "Назад",
+        snosTitle: "Бот для сноса ❄️",
+        snosHint: "Если бот 1 не работает, попробуйте бот 2.",
+        chooseBotText: "Выберите один из вариантов:",
+        backHome: "Назад",
+        detailDescription: "Ссылка на выбранного бота:",
+        detailOpen: "Открыть бота",
+        detailCopy: "Скопировать ссылку",
+        backBots: "К выбору ботов",
+        singleDescription: "Ссылка на выбранный сервис:",
+        singleOpen: "Открыть",
+        singleCopy: "Скопировать ссылку",
+        singleBack: "Назад",
         copied: "Ссылка скопирована!"
     },
     en: {
@@ -407,14 +448,19 @@ const translations = {
         subtitle: "Choose a service",
         cardTitle: "Choose a service",
         description: "Click a button below to continue.",
-        snosBtn: "Removal bot ❄️",
-        probivBtn: "Lookup bot 🔍",
         vpnBtn: "Best VPN for privacy 🕵️‍♂️",
-        resultTitle: "Ready!",
-        resultDescription: "Press the button to open the selected service.",
-        openBtn: "Open",
-        copyBtn: "Copy link",
-        backBtn: "Back",
+        snosTitle: "Removal bot",
+        snosHint: "If bot 1 doesn't work, try bot 2.",
+        chooseBotText: "Choose an option:",
+        backHome: "Back",
+        detailDescription: "Link to the selected bot:",
+        detailOpen: "Open bot",
+        detailCopy: "Copy link",
+        backBots: "Choose another bot",
+        singleDescription: "Link to the selected service:",
+        singleOpen: "Open",
+        singleCopy: "Copy link",
+        singleBack: "Back",
         copied: "Link copied!"
     }
 };
@@ -432,48 +478,87 @@ function setLang(lang) {
 
     document.getElementById("ruBtn").classList.toggle("active", lang === "ru");
     document.getElementById("enBtn").classList.toggle("active", lang === "en");
+
+    if (selectedBot === "bot1" || selectedBot === "bot2") {
+        updateBotDetails();
+    }
 }
 
-function showBot(bot) {
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+}
+
+function showBotDetails(bot) {
+    selectedBot = bot;
+    selectedLink = links[bot];
+    updateBotDetails();
+    showPage("botDetails");
+}
+
+function updateBotDetails() {
+    const isBot1 = selectedBot === "bot1";
+    const botNumber = isBot1 ? "1" : "2";
+    const otherNumber = isBot1 ? "2" : "1";
+
+    document.getElementById("detailTitle").textContent =
+        currentLang === "ru" ? "Бот " + botNumber : "Bot " + botNumber;
+
+    document.getElementById("detailHint").textContent =
+        currentLang === "ru"
+        ? "Если бот " + botNumber + " не работает, попробуйте бот " + otherNumber + "."
+        : "If bot " + botNumber + " doesn't work, try bot " + otherNumber + ".";
+
+    document.getElementById("detailLink").textContent = selectedLink;
+}
+
+function openSingleBot(bot) {
+    selectedBot = bot;
     selectedLink = links[bot];
 
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("result").classList.add("show");
-    document.getElementById("botLink").textContent = selectedLink;
+    const names = {
+        probiv: currentLang === "ru" ? "Бот для пробива 🔍" : "Lookup bot 🔍",
+        vpn: currentLang === "ru" ? "Лучший VPN 🕵️‍♂️" : "Best VPN 🕵️‍♂️"
+    };
+
+    document.getElementById("singleTitle").textContent = names[bot];
+    document.getElementById("singleLink").textContent = selectedLink;
+
+    showPage("singleDetails");
 }
 
-function openTelegram() {
+function openSelectedBot() {
     if (selectedLink) {
         window.open(selectedLink, "_blank");
     }
 }
 
-function copyLink() {
+async function copySelectedBot() {
     if (!selectedLink) return;
 
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(selectedLink).then(() => {
-            alert(translations[currentLang].copied);
-        });
-    } else {
-        const temp = document.createElement("textarea");
-        temp.value = selectedLink;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand("copy");
-        temp.remove();
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(selectedLink);
+        } else {
+            const temp = document.createElement("textarea");
+            temp.value = selectedLink;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            temp.remove();
+        }
+
         alert(translations[currentLang].copied);
+    } catch (error) {
+        alert("Не удалось скопировать. Скопируйте ссылку вручную.");
     }
 }
 
-function goBack() {
-    document.getElementById("result").classList.remove("show");
-    document.getElementById("menu").style.display = "block";
-}
-
-// PNG должен лежать рядом с index.html
+// Летающие призраки
 const ghostImage = "Без названия18_20260909224116.png";
-
 let activeGhosts = 0;
 
 function createGhost() {
