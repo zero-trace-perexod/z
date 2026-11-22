@@ -126,8 +126,14 @@ h1 {
 }
 
 @keyframes cardGlow {
-    from { box-shadow: 0 0 25px #008cff35, inset 0 0 20px #008cff10; }
-    to { box-shadow: 0 0 43px #008cff65, inset 0 0 30px #008cff20; }
+    from {
+        box-shadow: 0 0 25px #008cff35,
+        inset 0 0 20px #008cff10;
+    }
+    to {
+        box-shadow: 0 0 43px #008cff65,
+        inset 0 0 30px #008cff20;
+    }
 }
 
 .symbol {
@@ -261,13 +267,19 @@ h1 {
 @media(max-width: 600px) {
     .container { margin-top: 64px; }
     .card { margin-top: 22px; padding: 20px 15px; }
+
     .symbol {
         width: 57px;
         height: 57px;
         font-size: 30px;
         margin-bottom: 11px;
     }
-    .main-btn { padding: 13px 9px; font-size: 13px; }
+
+    .main-btn {
+        padding: 13px 9px;
+        font-size: 13px;
+    }
+
     .warning {
         top: 10px;
         right: 9px;
@@ -275,10 +287,6 @@ h1 {
         padding: 7px 8px;
         font-size: 9px;
     }
-}
-
-@media(max-width: 380px) {
-    .vpn-btn { font-size: 12px; }
 }
 </style>
 </head>
@@ -307,7 +315,7 @@ h1 {
 
     <!-- ГЛАВНОЕ МЕНЮ -->
     <section class="card page active" id="home">
-        <div class="symbol">👻</div>
+        <div class="symbol">⌁</div>
         <h2 id="cardTitle">Выберите сервис</h2>
         <p class="description" id="description">
             Нажмите на кнопку ниже, чтобы перейти к нужному сервису.
@@ -321,12 +329,12 @@ h1 {
             Бот для пробива 🔍
         </button>
 
-        <button class="main-btn vpn-btn" onclick="openSingleBot('vpn')" id="vpnBtn">
-            Лучший VPN для анонимности 🕵️‍♂️
+        <button class="main-btn" onclick="openSingleBot('telegramBot')" id="telegramBotBtn">
+            Бесплатный Бобмер смс💬
         </button>
     </section>
 
-    <!-- ВЫБОР БОТА ДЛЯ СНОСА -->
+    <!-- ВЫБОР БОТА -->
     <section class="card page" id="snos">
         <div class="symbol">❄️</div>
         <h2 id="snosTitle">Бот для сноса</h2>
@@ -354,7 +362,7 @@ h1 {
 
     <!-- СТРАНИЦА ВЫБРАННОГО БОТА -->
     <section class="card page" id="botDetails">
-        <div class="symbol">↗</div>
+        <div class="symbol">🔗</div>
         <h2 id="detailTitle">Бот 1</h2>
 
         <div class="small-hint" id="detailHint">
@@ -380,10 +388,11 @@ h1 {
         </button>
     </section>
 
-    <!-- СТРАНИЦА ПРОБИВА И VPN -->
+    <!-- СТРАНИЦА TELEGRAM-БОТА / ПРОБИВА -->
     <section class="card page" id="singleDetails">
-        <div class="symbol">🤖</div>
+        <div class="symbol">↗</div>
         <h2 id="singleTitle">Готово!</h2>
+
         <p class="description" id="singleDescription">
             Ссылка на выбранный сервис:
         </p>
@@ -411,8 +420,10 @@ h1 {
 const links = {
     bot1: "https://t.me/zerottracebot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
     bot2: "https://t.me/aoksdaoskasobot?start=ref_eyJhnre1ECbTo6ihrP6ne6g",
-    probiv: "https://t.me/okoseabot?start=cH7Uft92",
-    vpn: "https://t.me/natriavpnbot?start=partner_8123345032"
+    probiv: "https://t.me/FaidikS_bot?start=cH7Uft92",
+
+    // ВСТАВЬ СЮДА ССЫЛКУ НА СВОЕГО TELEGRAM-БОТА
+    telegramBot: "https://t.me/SowufqApk_bot?start=emrik"
 };
 
 let selectedLink = "";
@@ -426,8 +437,8 @@ const translations = {
         subtitle: "Выберите нужного бота",
         cardTitle: "Выберите сервис",
         description: "Нажмите на кнопку ниже, чтобы перейти к нужному сервису.",
-        vpnBtn: "Лучший VPN для анонимности 🕵️‍♂️",
-        snosTitle: "Бот для сноса ❄️",
+        telegramBotBtn: "Бесплатный Бомбер смс💬",
+        snosTitle: "Бот для сноса",
         snosHint: "Если бот 1 не работает, попробуйте бот 2.",
         chooseBotText: "Выберите один из вариантов:",
         backHome: "Назад",
@@ -441,6 +452,7 @@ const translations = {
         singleBack: "Назад",
         copied: "Ссылка скопирована!"
     },
+
     en: {
         warningTitle: "⚠️ Attention!",
         warningText: "If the link doesn't open, tap the three lines at the top and select Open in browser.",
@@ -448,7 +460,7 @@ const translations = {
         subtitle: "Choose a service",
         cardTitle: "Choose a service",
         description: "Click a button below to continue.",
-        vpnBtn: "Best VPN for privacy 🕵️‍♂️",
+        telegramBotBtn: "бесплатный Бомбер смс💬",
         snosTitle: "Removal bot",
         snosHint: "If bot 1 doesn't work, try bot 2.",
         chooseBotText: "Choose an option:",
@@ -495,6 +507,7 @@ function showPage(pageId) {
 function showBotDetails(bot) {
     selectedBot = bot;
     selectedLink = links[bot];
+
     updateBotDetails();
     showPage("botDetails");
 }
@@ -521,7 +534,7 @@ function openSingleBot(bot) {
 
     const names = {
         probiv: currentLang === "ru" ? "Бот для пробива 🔍" : "Lookup bot 🔍",
-        vpn: currentLang === "ru" ? "Лучший VPN 🕵️‍♂️" : "Best VPN 🕵️‍♂️"
+        telegramBot: "Бомбер смс💬"
     };
 
     document.getElementById("singleTitle").textContent = names[bot];
@@ -531,13 +544,23 @@ function openSingleBot(bot) {
 }
 
 function openSelectedBot() {
-    if (selectedLink) {
-        window.open(selectedLink, "_blank");
+    if (!selectedLink || selectedLink === "https://t.me/SowufqApk_bot?start=emrik") {
+        alert(currentLang === "ru"
+            ? "Сначала вставь ссылку на своего Telegram-бота в код."
+            : "First add your Telegram bot link in the code.");
+        return;
     }
+
+    window.open(selectedLink, "_blank");
 }
 
 async function copySelectedBot() {
-    if (!selectedLink) return;
+    if (!selectedLink || selectedLink === "https://t.me/SowufqApk_bot?start=emrik") {
+        alert(currentLang === "ru"
+            ? "Сначала вставь ссылку на своего Telegram-бота в код."
+            : "First add your Telegram bot link in the code.");
+        return;
+    }
 
     try {
         if (navigator.clipboard && window.isSecureContext) {
@@ -557,7 +580,7 @@ async function copySelectedBot() {
     }
 }
 
-// Летающие призраки
+// ЛЕТАЮЩИЕ ПРИЗРАКИ
 const ghostImage = "Без названия18_20260909224116.png";
 let activeGhosts = 0;
 
